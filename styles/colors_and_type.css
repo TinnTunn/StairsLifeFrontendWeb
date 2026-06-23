@@ -1,0 +1,435 @@
+/* ================================================================
+   StairsLife — Colors & Type tokens
+   Bold refresh: electric violet × citron-lime × coral × ink
+   ----------------------------------------------------------------
+   Drop this file in <head> BEFORE your component styles.
+   Everything else (buttons, cards, shadows) consumes these vars.
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* ============================================================
+     COLOR — Raw palette (use semantic tokens below, not these)
+     ============================================================ */
+
+  /* Violet — primary brand. Electric, modern, confident. */
+  --violet-50:   #F0F0FF;
+  --violet-100:  #E2E2FF;
+  --violet-200:  #C7C7FF;
+  --violet-300:  #A5A4FF;
+  --violet-400:  #807EFA;
+  --violet-500:  #5B5BF5;  /* PRIMARY */
+  --violet-600:  #4646E0;
+  --violet-700:  #3535B8;
+  --violet-800:  #252586;
+  --violet-900:  #16164F;
+  --violet-950:  #0B0A2A;
+
+  /* Aqua — spark accent. Electric cyan, sits analogous-cool to the violet logo.
+     Sharp, modern, tech-energy. Use sparingly (max one on screen). */
+  --aqua-50:    #E6FBFF;
+  --aqua-100:   #C2F5FF;
+  --aqua-200:   #85EBFF;
+  --aqua-300:   #1FE3FF;  /* SPARK */
+  --aqua-400:   #00C2E0;
+  --aqua-500:   #009BB5;
+  --aqua-600:   #007085;
+  --aqua-700:   #004A57;
+
+  /* Fuchsia — warm support. Hot pink-magenta, analogous-warm to violet.
+     Pairs lush with the brand; carries the warm secondary CTA + UMKM accent. */
+  --fuchsia-50:  #FFEBF6;
+  --fuchsia-100: #FFCEE8;
+  --fuchsia-200: #FFA0D2;
+  --fuchsia-300: #FF70BC;
+  --fuchsia-400: #FF3DA8;  /* WARM */
+  --fuchsia-500: #E91F8B;
+  --fuchsia-600: #B5126B;
+  --fuchsia-700: #7A0945;
+
+  /* Sky — info / verification / link */
+  --sky-50:      #ECF7FF;
+  --sky-100:     #D0EBFF;
+  --sky-300:     #6BC0FF;
+  --sky-500:     #2A9CEF;  /* INFO */
+  --sky-700:     #0C5C99;
+
+  /* Mint — success / verified */
+  --mint-50:     #E6FFF5;
+  --mint-100:    #BEFCE0;
+  --mint-300:    #5FE3AC;
+  --mint-500:    #1FB97D;  /* OK */
+  --mint-700:    #0E724B;
+
+  /* Amber — warning */
+  --amber-50:    #FFF7E0;
+  --amber-100:   #FFE8A6;
+  --amber-300:   #FFC233;
+  --amber-500:   #E69500;  /* WARN */
+  --amber-700:   #8A4F00;
+
+  /* Gold — rating stars ONLY. The one warm exception in a violet system —
+     because a star rating reads as gold/yellow universally. Never use for UI chrome. */
+  --gold-50:     #FFF8E1;
+  --gold-100:    #FFEDB3;
+  --gold-300:    #FFD24D;
+  --gold-400:    #FFC01F;
+  --gold-500:    #F5A800;  /* STAR */
+  --gold-600:    #C77F00;
+  --gold-700:    #8A5600;
+
+  /* Rose — danger / destructive */
+  --rose-50:     #FFEDF0;
+  --rose-100:    #FFCCD5;
+  --rose-300:    #FF6F86;
+  --rose-500:    #ED2E4E;  /* ERR */
+  --rose-700:    #99001D;
+
+  /* Ink — neutrals, biased to violet (cool). Light end = white, dark end = deep indigo (never pure black). */
+  --ink-0:       #FFFFFF;
+  --ink-25:      #FFFFFF;  /* light-mode base — pure white */
+  --ink-50:      #F8F8FB;  /* very faint cool gray */
+  --ink-100:     #ECECF3;
+  --ink-200:     #D6D6E1;
+  --ink-300:     #ADADBE;
+  --ink-400:     #7A7A8E;
+  --ink-500:     #535369;
+  --ink-600:     #383850;
+  --ink-700:     #232340;
+  --ink-800:     #151530;
+  --ink-900:     #15154A;
+  --ink-950:     #0E0D3D;  /* deep indigo — dark-mode base; replaces near-black */
+
+  /* ============================================================
+     COLOR — Semantic tokens (USE THESE)
+     ============================================================ */
+
+  /* Brand */
+  --brand:              var(--violet-500);
+  --brand-hover:        var(--violet-600);
+  --brand-pressed:      var(--violet-700);
+  --brand-soft:         var(--violet-50);
+  --brand-soft-border:  var(--violet-100);
+  --brand-on:           #FFFFFF;
+  --brand-glow:         rgba(91,91,245,0.30);
+
+  --spark:              var(--violet-300);   /* #A5A4FF light periwinkle highlight */
+  --spark-hover:        var(--violet-400);
+  --spark-soft:         var(--violet-50);
+  --spark-on:           var(--ink-950);
+  --spark-glow:         rgba(165,164,255,0.40);
+
+  --warm:               var(--violet-700);   /* #3535B8 deep indigo — in-family secondary */
+  --warm-hover:         var(--violet-800);
+  --warm-soft:          var(--violet-100);
+  --warm-on:            #FFFFFF;
+  --warm-glow:          rgba(53,53,184,0.40);
+
+  /* Surface — backgrounds (light mode) */
+  --bg-base:            var(--ink-25);
+  --bg-sunken:          var(--ink-50);
+  --bg-raised:          var(--ink-0);
+  --bg-overlay:         rgba(11,10,31,0.55);
+  --bg-inverted:        var(--ink-950);
+
+  /* Foreground — text */
+  --fg-1:               var(--ink-950);  /* primary text */
+  --fg-2:               var(--ink-600);  /* secondary text */
+  --fg-3:               var(--ink-400);  /* muted / placeholder */
+  --fg-4:               var(--ink-300);  /* disabled */
+  --fg-on-brand:        #FFFFFF;
+  --fg-on-dark:         var(--ink-25);
+  --fg-on-spark:        var(--ink-950);
+
+  /* Borders / lines */
+  --line-1:             var(--ink-100);  /* default */
+  --line-2:             var(--ink-200);  /* hover / medium */
+  --line-strong:        var(--ink-300);
+  --line-on-dark:       rgba(255,255,255,0.10);
+
+  /* Status — semantic */
+  --ok:                 var(--mint-500);
+  --ok-soft:            var(--mint-50);
+  --ok-fg:              var(--mint-700);
+  --info:               var(--sky-500);
+  --info-soft:          var(--sky-50);
+  --info-fg:            var(--sky-700);
+  --warn:               var(--amber-500);
+  --warn-soft:          var(--amber-50);
+  --warn-fg:            var(--amber-700);
+  --err:                var(--rose-500);
+  --err-soft:           var(--rose-50);
+  --err-fg:             var(--rose-700);
+
+  /* Rating star — gold */
+  --rating:             var(--gold-500);
+  --rating-soft:        var(--gold-50);
+  --rating-fg:          var(--gold-700);
+  --rating-empty:       var(--ink-200);
+
+  /* ============================================================
+     GRADIENTS & MESHES — Set-piece backgrounds
+     ============================================================ */
+  --grad-brand:        linear-gradient(135deg, #5B5BF5 0%, #8B5BFF 60%, #3535B8 100%);
+  --grad-brand-soft:   linear-gradient(135deg, #EEEBFF 0%, #DFE0FF 100%);
+  --grad-spark:        linear-gradient(135deg, #C7C7FF 0%, #5B5BF5 100%);
+  --grad-night:        linear-gradient(165deg, #0E0D3D 0%, #1A1A55 55%, #3535B8 100%);
+  --grad-aurora:       radial-gradient(60% 60% at 20% 10%, rgba(91,91,245,0.55) 0%, transparent 60%),
+                       radial-gradient(50% 50% at 85% 0%, rgba(139,91,255,0.45) 0%, transparent 65%),
+                       radial-gradient(70% 70% at 60% 100%, rgba(165,164,255,0.30) 0%, transparent 60%),
+                       linear-gradient(180deg, #0E0D3D 0%, #1B1B5C 100%);
+  --grad-cream-mesh:   radial-gradient(80% 60% at 0% 0%,   rgba(91,91,245,0.10) 0%, transparent 60%),
+                       radial-gradient(60% 60% at 100% 30%, rgba(53,53,184,0.08) 0%, transparent 60%),
+                       radial-gradient(80% 60% at 50% 100%,rgba(165,164,255,0.14) 0%, transparent 60%),
+                       var(--ink-25);
+  --grad-violet-wash:  linear-gradient(135deg, #5B5BF5 0%, #3535B8 100%);
+  --grad-warm-wash:    linear-gradient(135deg, #4646E0 0%, #16164F 100%);
+
+  /* Noise / grain — apply as overlay layer */
+  --noise:             url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+
+  /* ============================================================
+     SHADOWS — Layered depth
+     ============================================================ */
+  --shadow-xs:   0 1px 1px rgba(15,14,26,0.04), 0 0 0 1px rgba(15,14,26,0.02);
+  --shadow-sm:   0 1px 2px rgba(15,14,26,0.05), 0 2px 6px -2px rgba(15,14,26,0.06);
+  --shadow-md:   0 4px 10px -2px rgba(15,14,26,0.08), 0 8px 24px -4px rgba(15,14,26,0.08);
+  --shadow-lg:   0 10px 24px -6px rgba(15,14,26,0.12), 0 22px 48px -12px rgba(15,14,26,0.16);
+  --shadow-xl:   0 24px 60px -12px rgba(15,14,26,0.22), 0 8px 16px -4px rgba(15,14,26,0.08);
+  --shadow-brand:0 10px 30px -10px var(--brand-glow), 0 4px 12px -2px rgba(91,91,245,0.20);
+  --shadow-warm: 0 10px 30px -10px rgba(53,53,184,0.45);
+  --shadow-inset:inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(15,14,26,0.06);
+
+  /* Glassmorphism — set on a backdrop-filter element */
+  --glass-bg:        rgba(255,255,255,0.55);
+  --glass-bg-dark:   rgba(20,18,40,0.55);
+  --glass-border:    rgba(255,255,255,0.40);
+  --glass-blur:      saturate(160%) blur(20px);
+
+  /* ============================================================
+     RADII — Bento-friendly scale
+     ============================================================ */
+  --r-xs:   6px;
+  --r-sm:   10px;
+  --r-md:   14px;
+  --r-lg:   20px;
+  --r-xl:   28px;
+  --r-2xl:  36px;
+  --r-pill: 9999px;
+
+  /* ============================================================
+     SPACING — 4px base
+     ============================================================ */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+
+  /* ============================================================
+     TYPE — Foundations
+     ============================================================ */
+  --font-sans:    'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Schibsted Grotesk', 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Step scale (clamp-based, responsive)   min      ideal-vw    max  */
+  --t-display: clamp(44px, 5.2vw + 20px, 88px);   /* hero display */
+  --t-h1:      clamp(34px, 3.2vw + 16px, 60px);
+  --t-h2:      clamp(26px, 2.0vw + 14px, 42px);
+  --t-h3:      clamp(20px, 1.0vw + 14px, 28px);
+  --t-h4:      18px;
+  --t-h5:      16px;
+  --t-body-lg: 17px;
+  --t-body:    15px;
+  --t-body-sm: 13px;
+  --t-caption: 12px;
+  --t-overline:11px;
+
+  /* Weights */
+  --w-regular: 400;
+  --w-medium:  500;
+  --w-semi:    600;
+  --w-bold:    700;
+  --w-black:   800;
+
+  /* Line heights */
+  --lh-tight:   1.05;
+  --lh-snug:    1.20;
+  --lh-normal:  1.45;
+  --lh-relaxed: 1.65;
+
+  /* Letter spacing */
+  --ls-tighter: -0.04em;
+  --ls-tight:   -0.02em;
+  --ls-normal:   0;
+  --ls-wide:     0.06em;
+  --ls-wider:    0.16em;
+
+  /* ============================================================
+     MOTION
+     ============================================================ */
+  --ease-out:    cubic-bezier(0.16, 1, 0.30, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    140ms;
+  --dur-base:    220ms;
+  --dur-slow:    420ms;
+  --dur-stage:   800ms;
+
+  /* ============================================================
+     LAYOUT
+     ============================================================ */
+  --max-w:        1240px;
+  --gutter:       clamp(20px, 4vw, 48px);
+  --sidebar-w:    264px;
+  --nav-h:        72px;
+  --bottom-nav-h: 68px;
+}
+
+/* ================================================================
+   DARK THEME — Inverts surfaces, keeps brand vivid
+   ================================================================ */
+[data-theme="dark"] {
+  /* Elevation ladder — deep NAVY-BLUE, sharing the brand's blue hue (≈235°).
+     Each step lifts toward a warmer blue so surfaces read as a cohesive
+     ecosystem, not a flat monotone. Saturated accents still pop. */
+  --bg-base:           #0B1124;   /* canvas — deep navy blue */
+  --bg-sunken:         #070C1B;   /* insets, input fills, code — deepest */
+  --bg-raised:         #15203D;   /* cards / panels — lighter navy */
+  --bg-raised-2:       #1F2D50;   /* card hover / nested raised — blue lifts */
+  --bg-overlay:        rgba(7,12,27,0.82);
+  --bg-inverted:       var(--ink-25);
+
+  --fg-1:              #EEF1FB;
+  --fg-2:              #AFB7D4;   /* cool blue-gray, harmonized with navy */
+  --fg-3:              #7C85A8;
+  --fg-4:              #515A7C;
+  --fg-on-dark:        var(--ink-25);
+
+  /* Borders — cool blue-tinted whites so edges read on navy */
+  --line-1:            rgba(150,170,255,0.14);
+  --line-2:            rgba(150,170,255,0.22);
+  --line-strong:       rgba(160,180,255,0.32);
+
+  --brand-soft:        rgba(91,91,245,0.24);
+  --brand-soft-border: rgba(128,126,250,0.48);
+
+  --spark-soft:        rgba(165,164,255,0.18);
+  --warm-soft:         rgba(91,91,245,0.24);
+
+  --ok-soft:           rgba(31,185,125,0.20);
+  --info-soft:         rgba(42,156,239,0.22);
+  --warn-soft:         rgba(230,149,0,0.20);
+  --err-soft:          rgba(237,46,78,0.20);
+  --rating-soft:       rgba(245,168,0,0.20);
+  --rating-empty:      rgba(160,180,255,0.18);
+
+  /* Mesh — soft blue/violet corner glows over the navy base, so the canvas
+     has gentle depth & color life instead of reading flat/monotone. */
+  --grad-cream-mesh:   radial-gradient(75% 55% at 0% 0%,   rgba(91,91,245,0.16) 0%, transparent 55%),
+                       radial-gradient(65% 55% at 100% 6%,  rgba(42,156,239,0.12) 0%, transparent 58%),
+                       radial-gradient(80% 60% at 60% 100%, rgba(139,91,255,0.10) 0%, transparent 60%),
+                       var(--bg-base);
+
+  --shadow-xs:   0 1px 1px rgba(0,0,0,0.40);
+  --shadow-sm:   0 2px 8px rgba(2,4,16,0.50), 0 1px 2px rgba(2,4,16,0.34);
+  --shadow-md:   0 8px 20px rgba(2,4,16,0.58), 0 2px 6px rgba(2,4,16,0.42);
+  --shadow-lg:   0 20px 44px rgba(2,4,16,0.64), 0 8px 16px rgba(2,4,16,0.46);
+  --shadow-xl:   0 32px 84px rgba(2,4,16,0.72);
+
+  --glass-bg:        rgba(18,28,56,0.64);
+  --glass-border:    rgba(150,170,255,0.16);
+
+}
+
+/* ================================================================
+   BASE & SEMANTIC TYPOGRAPHY — use without classes
+   ================================================================ */
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-normal);
+  color: var(--fg-1);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.t-display, h1.display {
+  font-family: var(--font-display);
+  font-weight: var(--w-black);
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tighter);
+  text-wrap: balance;
+}
+h1, .t-h1 {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: var(--t-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+h2, .t-h2 {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: var(--t-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+h3, .t-h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--w-black);
+  font-size: var(--t-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+}
+h4, .t-h4 { font-weight: var(--w-bold); font-size: var(--t-h4); line-height: var(--lh-snug); }
+h5, .t-h5 { font-weight: var(--w-semi); font-size: var(--t-h5); line-height: var(--lh-normal); }
+
+p, .t-body { font-size: var(--t-body); line-height: var(--lh-relaxed); color: var(--fg-2); text-wrap: pretty; }
+.t-body-lg { font-size: var(--t-body-lg); line-height: var(--lh-relaxed); }
+.t-body-sm { font-size: var(--t-body-sm); line-height: var(--lh-normal); color: var(--fg-2); }
+.t-caption { font-size: var(--t-caption); line-height: var(--lh-normal); color: var(--fg-3); }
+.t-overline {
+  font-size: var(--t-overline);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+code, .t-mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line-1);
+  padding: 1px 6px;
+  border-radius: var(--r-xs);
+}
+
+/* Color utilities */
+.fg-1{color:var(--fg-1)} .fg-2{color:var(--fg-2)} .fg-3{color:var(--fg-3)}
+.fg-brand{color:var(--brand)} .fg-warm{color:var(--warm)} .fg-spark{color:var(--spark)}
+.bg-base{background:var(--bg-base)} .bg-raised{background:var(--bg-raised)}
+.bg-night{background:var(--ink-950);color:var(--fg-on-dark)}
+.bg-aurora{background:var(--grad-aurora);color:var(--fg-on-dark)}
+.bg-cream-mesh{background:var(--grad-cream-mesh)}
+
+/* Noise overlay helper — put inside a positioned container */
+.noise::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:var(--noise);mix-blend-mode:overlay;opacity:.5;
+}

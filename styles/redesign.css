@@ -1,0 +1,990 @@
+/* ================================================================
+   StairsLife — redesign.css  (design concept v3 + animations)
+   ----------------------------------------------------------------
+   Dimuat PALING AKHIR supaya meng-override main.css tanpa menyentuh
+   file aslinya. Konsep: electric violet × navy ecosystem, Manrope +
+   Schibsted Grotesk, gradient set-piece, micro-interactions & entrance
+   animations. Semua warna lewat token (auto light/dark).
+   ================================================================ */
+
+/* ---------------------------------------------------------------
+   0. GLOBAL RESET — hapus native browser password reveal button
+   (Edge / Chrome menambah ikon mata bawaan → berdulikasi dengan
+   custom .input-eye SVG kita). Sembunyikan ikon native saja.
+   --------------------------------------------------------------- */
+input[type="password"]::-ms-reveal             { display: none !important; }
+input[type="password"]::-ms-clear              { display: none !important; }
+input[type="password"]::-webkit-credentials-auto-fill-button { display: none !important; }
+input[type="password"]::-webkit-contacts-auto-fill-button    { display: none !important; }
+
+/* ---------------------------------------------------------------
+   1. TIPOGRAFI DISPLAY — heading pakai Schibsted Grotesk
+   --------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6,
+.hero-title, .section-title, .cta-title, .onboarding-title,
+.dash-greeting, .profile-name, .stat-val, .auth-title,
+.hero-card-title, .feature-title, .step-title {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+.hero-title, .section-title, .cta-title, .onboarding-title {
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+/* Wordmark = Manrope 800, tracking ketat, lowercase "stairslife" (sesuai design Logo) */
+.logo-text { font-family: var(--font); font-weight: 800; letter-spacing: -0.045em; text-transform: lowercase; }
+
+/* ---------------------------------------------------------------
+   2. LOGO MARK — brand mark resmi StairsLife (gradient box + stair-step putih)
+   Markup SVG di index.html sudah diganti ke 3 rect tangga (sesuai favicon.svg).
+   --------------------------------------------------------------- */
+/* Mark = SVG tangga telanjang berwarna brand (TANPA box gradient), sesuai design LogoMark */
+.logo-mark { background: none; box-shadow: none; border-radius: 0; width: 30px; height: 30px; }
+.logo-mark svg { width: 100%; height: 100%; fill: var(--brand); }
+/* Di atas set-piece gelap (aurora/footer) → periwinkle spark biar kontras */
+.auth-art .logo-mark svg, .auth-art-brand .logo-mark svg, .footer .logo-mark svg { fill: var(--spark); }
+
+/* ---------------------------------------------------------------
+   2b. KOMPONEN CLAUDE DESIGN — pill badge, skill chip, feature icon,
+   step number, eyebrow, sidebar active. Target class yang dipakai FE
+   ini (landing & shell) supaya tampilan mengikuti design handoff.
+   --------------------------------------------------------------- */
+/* Badge: pill rapat ala design system */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 11px; border-radius: var(--radius-full);
+  font-size: 11px; font-weight: 700; line-height: 1; white-space: nowrap;
+}
+
+/* Skill / kategori chip — pill sunken */
+.hero-skill-tag, .skill-tag, .proj-skill, .skill-pill {
+  border-radius: var(--radius-full); font-weight: 600;
+}
+
+/* Feature icon: kotak tinted lembut + ikon stroke (design "feat-ico") */
+.feature-icon-wrap {
+  background: var(--brand-soft); color: var(--brand);
+  border-radius: var(--radius-md);
+  transition: transform var(--dur-base, 220ms) var(--ease-spring, ease);
+}
+.feature-icon-wrap svg { stroke: currentColor; }
+.card:hover .feature-icon-wrap { transform: translateY(-3px) rotate(-5deg); }
+[data-theme="dark"] .feature-icon-wrap { color: var(--spark); }
+
+/* Step number — chip gradient brand */
+.step-num { background: var(--grad-brand); color: #fff; box-shadow: var(--shadow-brand); }
+
+/* Eyebrow (overline) brand */
+.section-eyebrow .eyebrow, .eyebrow, .overline { color: var(--brand); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Sidebar / nav item aktif → brand-soft (design app-shell) */
+.side-item.is-active, .side-item.active, .nav-item.active, .tab.active, .dash-tab.active {
+  background: var(--brand-soft); color: var(--brand); font-weight: 700;
+}
+
+/* Angka statistik pakai display font */
+.stat-val, .bento-big { font-family: var(--font-heading); letter-spacing: -0.02em; }
+
+/* ---------------------------------------------------------------
+   2c. APP-SHELL & DASHBOARD — sesuai design "app-shell"
+   (sidebar bg-raised + canvas cream-mesh + stat-tile accent line +
+   chip filter brand + search ring). Target class FE ini, markup utuh.
+   --------------------------------------------------------------- */
+/* Canvas dashboard: cream-mesh (light) / navy-mesh (dark) */
+.app-main { background: var(--grad-cream-mesh); }
+
+/* Sidebar surface + item aktif brand-soft */
+.sidebar { background: var(--bg-raised); border-right: 1px solid var(--line-1); }
+.sidebar-item { border-radius: var(--radius-sm); transition: background var(--dur-fast,140ms), color var(--dur-fast,140ms), transform var(--dur-fast,140ms); }
+.sidebar-item:hover { background: var(--bg-sunken); transform: translateX(2px); }
+.sidebar-item.active { background: var(--brand-soft); color: var(--brand); font-weight: 700; box-shadow: inset 3px 0 0 var(--brand); }
+.sidebar-item.active svg { stroke: var(--brand); }
+.sidebar-logout:hover { background: var(--err-soft); color: var(--err-fg); }
+
+/* ---------------------------------------------------------------
+   2c-bis. BENTO STAT TILES — design "stat-tile" (Dashboard.jsx).
+   Editorial tile: uppercase overline + big Schibsted number + caption
+   + colored top-accent line. No icon. Optional progress bar / ink-dot.
+   Used by all dashboards (student/business/admin/finance/portfolio).
+   --------------------------------------------------------------- */
+.bento-dash { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+@media (max-width: 900px) { .bento-dash { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .bento-dash { grid-template-columns: 1fr; } }
+
+.bento-dash .stat-tile {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 6px;
+  min-height: 124px; padding: 20px 18px 18px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line-1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out);
+}
+.bento-dash .stat-tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+[data-theme="dark"] .bento-dash .stat-tile { border-color: var(--line-2); }
+[data-theme="dark"] .bento-dash .stat-tile:hover { background: var(--bg-raised-2); }
+.bento-dash .stat-tile::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--tile-accent, var(--brand));
+}
+
+.bento-overline { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); }
+.bento-big { font-family: var(--font-heading); font-weight: 800; font-size: 34px; line-height: 1; letter-spacing: -0.04em; margin-top: auto; color: var(--fg-1); display: inline-flex; align-items: center; gap: 4px; }
+.bento-big span { font-size: 18px; font-weight: 700; margin-left: 3px; color: inherit; }
+.bento-cap { font-size: 12.5px; font-weight: 600; color: var(--fg-2); }
+.bento-cap--up { color: var(--ok-fg); }
+
+.stat-tile--violet { --tile-accent: linear-gradient(90deg, var(--brand), #8B5BFF); }
+.stat-tile--mint   { --tile-accent: linear-gradient(90deg, var(--mint-500), var(--mint-300)); }
+.stat-tile--gold   { --tile-accent: linear-gradient(90deg, var(--gold-500), var(--gold-300)); }
+.stat-tile--rose   { --tile-accent: linear-gradient(90deg, var(--err), var(--rose-300)); }
+.stat-tile--sky    { --tile-accent: linear-gradient(90deg, var(--info), var(--sky-300)); }
+.stat-tile--violet .bento-big { color: var(--brand); }
+[data-theme="dark"] .stat-tile--violet .bento-big { color: var(--violet-300); }
+.stat-tile--gold .bento-big { color: var(--fg-1); }
+
+/* progress bar inside a tile (Profil%) */
+.bento-dash .b-bar { height: 6px; background: var(--bg-sunken); border-radius: 99px; overflow: hidden; margin-top: 8px; }
+[data-theme="dark"] .bento-dash .b-bar { background: rgba(255,255,255,0.12); }
+.bento-dash .b-fill { height: 100%; background: linear-gradient(90deg, var(--brand), #8B5BFF); border-radius: 99px; transition: width 600ms var(--ease-out); }
+/* live pulse dot (Project Aktif) */
+.bento-dash .ink-dot { position: absolute; bottom: 14px; right: 14px; width: 10px; height: 10px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 12px var(--brand); }
+[data-theme="dark"] .bento-dash .ink-dot { background: var(--violet-300); box-shadow: 0 0 12px var(--violet-300); }
+
+/* ---------------------------------------------------------------
+   2c-ter. VERIFY BANNER — design "verify-banner" (warm-wash alert
+   with icon + title/sub + action). FE markup: .verify-banner.
+   --------------------------------------------------------------- */
+.verify-banner {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; margin-bottom: 20px;
+  background: var(--warn-soft); border: 1px solid var(--warn-soft-border, rgba(230,149,0,0.28));
+  border-radius: var(--radius-md); color: var(--warn-fg);
+}
+.verify-banner > svg { width: 22px; height: 22px; flex-shrink: 0; stroke: var(--warn-fg); fill: none; stroke-width: 2; }
+.verify-banner-title { font-weight: 700; font-size: 14px; color: var(--fg-1); margin-bottom: 2px; }
+.verify-banner-sub { font-size: 12.5px; color: var(--fg-2); line-height: 1.45; }
+[data-theme="dark"] .verify-banner { background: rgba(230,149,0,0.14); border-color: rgba(230,149,0,0.3); }
+
+/* Project card hover lift (design proj-card) */
+.project-card { transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out), border-color var(--dur-fast,140ms); }
+.project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--line-2); }
+[data-theme="dark"] .project-card:hover { background: var(--bg-raised-2); }
+
+/* Search bar focus ring (design) */
+.search-bar:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); }
+
+/* Filter chips → pill, active brand fill (design chip) */
+.filter-chip { border-radius: var(--radius-full); transition: all var(--dur-fast,140ms) var(--ease-out); }
+.filter-chip:hover { background: var(--brand-soft); border-color: var(--brand-soft-border); color: var(--brand); }
+.filter-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+/* Progress bar → brand gradient */
+.progress-fill { background: var(--grad-brand); }
+
+/* Section header title display */
+.section-hdr-title { font-family: var(--font-heading); font-weight: 700; letter-spacing: -0.01em; }
+
+/* ---------------------------------------------------------------
+   3. BUTTONS — match design tokens.css (solid brand, radius r-sm,
+   border 1.5px, lift -1px). Varian: primary/secondary/ghost/spark/
+   warm/white/outline-white/danger.
+   --------------------------------------------------------------- */
+.btn {
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 11px 18px;
+  gap: 7px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform var(--dur-fast, 140ms) var(--ease-out),
+              box-shadow var(--dur-base, 220ms) var(--ease-out),
+              background var(--dur-fast, 140ms), border-color var(--dur-fast, 140ms),
+              color var(--dur-fast, 140ms);
+}
+.btn:hover  { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-hover); box-shadow: var(--shadow-brand); }
+
+.btn-secondary { background: var(--brand-soft); color: var(--brand); border-color: var(--brand-soft-border); }
+.btn-secondary:hover { background: color-mix(in oklab, var(--brand-soft) 80%, var(--brand) 20%); }
+
+.btn-ghost { background: transparent; color: var(--fg-2); border-color: var(--line-2); }
+.btn-ghost:hover { background: var(--bg-sunken); color: var(--fg-1); }
+
+.btn-spark { background: var(--spark); color: var(--ink-950); font-weight: 700; }
+.btn-spark:hover { background: var(--spark-hover); box-shadow: 0 10px 28px -10px var(--spark-glow); }
+
+.btn-warm { background: var(--warm); color: #fff; }
+.btn-warm:hover { background: var(--warm-hover); box-shadow: var(--shadow-warm); }
+
+.btn-white { background: #fff; color: var(--ink-950); font-weight: 700; }
+.btn-white:hover { background: var(--ink-50); }
+
+.btn-outline-white { background: transparent; color: #fff; border-color: rgba(255,255,255,0.32); }
+.btn-outline-white:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.55); }
+
+.btn-danger { background: var(--err-soft); color: var(--err-fg); }
+.btn-danger:hover { background: color-mix(in oklab, var(--err-soft) 82%, var(--err) 18%); }
+
+/* sizes — match design */
+.btn-sm { padding: 8px 14px; font-size: 12.5px; }
+.btn-lg { padding: 14px 24px; font-size: 15px; border-radius: var(--radius-md); }
+.btn-xl { padding: 17px 28px; font-size: 16px; border-radius: var(--radius-md); }
+
+/* ---------------------------------------------------------------
+   4. HERO — aurora set-piece + glow
+   --------------------------------------------------------------- */
+.hero {
+  background: var(--grad-aurora);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: var(--noise);
+  mix-blend-mode: overlay; opacity: .5; pointer-events: none;
+}
+/* Aurora drift: dua glow lembut yang bergerak pelan di belakang konten hero,
+   memberi gerak halus above-the-fold (tanpa perlu scroll). */
+.hero::before {
+  content: ""; position: absolute; inset: -25%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38% 38% at 22% 28%, rgba(139,91,255,.55) 0%, transparent 60%),
+    radial-gradient(34% 34% at 78% 62%, rgba(31,227,255,.30) 0%, transparent 62%);
+  filter: blur(8px);
+  animation: sl-hero-drift 16s ease-in-out infinite alternate;
+}
+@keyframes sl-hero-drift {
+  0%   { transform: translate3d(-3%, -2%, 0) scale(1); }
+  50%  { transform: translate3d(3%, 2%, 0) scale(1.08); }
+  100% { transform: translate3d(-2%, 3%, 0) scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) { .hero::before { animation: none; } }
+.hero-inner, .hero-layout { position: relative; z-index: 1; }
+/* Hero title accent — kata kunci spark + highlight bar (design) */
+.hero-title .hero-accent { display: inline-block; position: relative; color: var(--spark); }
+.hero-title .hero-accent::after { content: ""; position: absolute; left: 0; right: 0; bottom: .02em; height: 6px; background: rgba(165,164,255,.45); border-radius: 3px; z-index: -1; }
+.hero-card { background: var(--glass-bg-dark, rgba(20,18,40,0.55)); border: 1px solid var(--glass-border, rgba(255,255,255,0.16)); backdrop-filter: saturate(160%) blur(18px); -webkit-backdrop-filter: saturate(160%) blur(18px); }
+
+/* ---------------------------------------------------------------
+   5. CARDS & SURFACES — dark-mode elevation ladder
+   --------------------------------------------------------------- */
+[data-theme="dark"] .card-hover:hover,
+[data-theme="dark"] .proj-card:hover,
+[data-theme="dark"] .project-card:hover,
+[data-theme="dark"] .application-card:hover,
+[data-theme="dark"] .my-proj-card:hover { background: var(--bg-raised-2); }
+
+/* stats banner pakai brand solid biar pop */
+.stats-banner { background: var(--brand); }
+
+/* ---------------------------------------------------------------
+   6. ANIMATIONS — keyframes
+   --------------------------------------------------------------- */
+@keyframes sl-up        { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes sl-fade      { from { opacity: 0; transform: translateY(8px); }  to { opacity: 1; transform: none; } }
+@keyframes sl-float     { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes sl-shimmer   { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+@keyframes sl-pop       { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes sl-pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+/* entrance: elemen hero (markup sudah punya hook .anim-up) */
+.anim-up   { animation: sl-up .6s var(--ease-out, ease) both; }
+.anim-up-1 { animation-delay: .08s; }
+.anim-up-2 { animation-delay: .16s; }
+.anim-up-3 { animation-delay: .24s; }
+.anim-up-4 { animation-delay: .32s; }
+
+/* entrance: tiap screen yang aktif fade-up halus */
+.screen.active { animation: sl-fade .4s var(--ease-out, ease); }
+
+/* hero card melayang lembut */
+.hero-card { animation: sl-float 6.5s ease-in-out infinite; }
+
+/* feature icon: angkat + miring saat hover kartu */
+.feature-icon-wrap, .feat-ico { transition: transform var(--dur-base, 220ms) var(--ease-spring, ease); }
+.card:hover .feature-icon-wrap, .card:hover .feat-ico { transform: translateY(-3px) rotate(-5deg); }
+
+/* nav link & sidebar item: garis bawah / geser halus */
+.l-nav-link, .side-item { transition: color var(--dur-fast,140ms), background var(--dur-fast,140ms), transform var(--dur-fast,140ms); }
+.side-item:hover { transform: translateX(2px); }
+
+/* toast & modal motion */
+.toast { animation: sl-pop .35s var(--ease-spring, ease); }
+.modal-overlay .card, .modal-card, .susp-card, [class*="modal"] > .card { animation: sl-pop .32s var(--ease-spring, ease); }
+
+/* skeleton shimmer (kalau dipakai loader) */
+.skeleton, .sk-line, .sk-box, [class*="skeleton"] {
+  background-image: linear-gradient(90deg, var(--bg-sunken) 25%, var(--line-1) 37%, var(--bg-sunken) 63%);
+  background-size: 400% 100%;
+  animation: sl-shimmer 1.4s ease infinite;
+}
+
+/* status dot berdenyut (online/processing) */
+.dot-live, .status-dot.is-live { animation: sl-pulse-dot 1.6s ease-in-out infinite; }
+
+/* ---------------------------------------------------------------
+   7. SCROLL REVEAL — di-trigger anim.js (scroll listener)
+   PROGRESSIVE ENHANCEMENT: state tersembunyi HANYA aktif kalau JS hidup
+   (html.sl-js, ditambahkan inline script <head>). Tanpa JS / jika anim.js
+   gagal load, .sl-reveal default TAMPIL — landing tidak pernah "kosong".
+   --------------------------------------------------------------- */
+html.sl-js .sl-reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s var(--ease-out, ease), transform .65s var(--ease-out, ease); will-change: opacity, transform; }
+html.sl-js .sl-reveal.sl-in { opacity: 1; transform: none; }
+.sl-reveal.sl-d1 { transition-delay: .06s; }
+.sl-reveal.sl-d2 { transition-delay: .12s; }
+.sl-reveal.sl-d3 { transition-delay: .18s; }
+.sl-reveal.sl-d4 { transition-delay: .24s; }
+.sl-reveal.sl-d5 { transition-delay: .30s; }
+
+/* ---------------------------------------------------------------
+   8. HORMATI prefers-reduced-motion
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .anim-up, .screen.active, .hero-card, .toast, .modal-card,
+  .modal-overlay .card, .susp-card, .skeleton, [class*="skeleton"],
+  .dot-live, .btn-primary, .btn-primary:hover,
+  .hero-card-stage::before, .hero-card-budget::after { animation: none !important; }
+  .sl-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .hero-card { transform: none !important; }
+  .hero-card-stage::before { opacity: .4 !important; }
+}
+
+/* ---------------------------------------------------------------
+   9. AUTH — split aurora-art + form (Claude design "auth-shell")
+   Login & Register pakai layout 2 kolom: panel art aurora (kiri,
+   desktop) + kolom form (kanan). Mobile: art disembunyikan, form
+   full-width (markup & handler JS tidak berubah).
+   --------------------------------------------------------------- */
+.auth-main-col { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; }
+.auth-screen.auth-split .auth-body { background: var(--grad-cream-mesh); }
+.auth-screen.auth-split .auth-card { box-shadow: var(--shadow-lg, 0 18px 50px -16px rgba(20,20,60,.22)); }
+
+/* Panel art — hanya tampil di desktop */
+.auth-art { display: none; }
+
+/* Brand di dalam art */
+.auth-art-brand { display: flex; align-items: center; gap: 10px; }
+.auth-art-brand .logo-mark { width: 38px; height: 38px; }
+.auth-art-brand .logo-text { color: #fff; font-size: 19px; font-weight: 800; letter-spacing: -0.03em; }
+.auth-art-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.72); margin-bottom: 14px; }
+.auth-art-title { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 40px); line-height: 1.05; letter-spacing: -.03em; font-weight: 800; color: #fff; text-wrap: balance; margin: 0; }
+.auth-art-sub { margin: 16px 0 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,.82); max-width: 40ch; }
+.auth-art-pills { display: flex; flex-direction: column; gap: 11px; margin-top: 26px; }
+.auth-art-pill { display: flex; align-items: center; gap: 12px; font-size: 14.5px; font-weight: 600; color: #fff; }
+.auth-art-pill .ic { width: 30px; height: 30px; flex-shrink: 0; border-radius: 9px; display: grid; place-items: center; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22); }
+.auth-art-pill svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.4; }
+
+/* Mini glass card melayang */
+.auth-art-card { background: rgba(16,13,61,.40); border: 1px solid rgba(255,255,255,.18); border-radius: var(--radius-lg); padding: 15px 17px; backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%); }
+.auth-art-card-row { display: flex; align-items: center; gap: 12px; }
+.auth-art-card-id { flex: 1; min-width: 0; }
+.auth-art-avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; color: #fff; background: linear-gradient(135deg, #8B5BFF, #5B5BF5); flex-shrink: 0; }
+.auth-art-avatars { display: flex; }
+.auth-art-avatars span { width: 32px; height: 32px; margin-left: -9px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 12px; color: #fff; border: 2px solid rgba(16,13,61,.85); background: linear-gradient(135deg, #8B5BFF, #5B5BF5); }
+.auth-art-avatars span:first-child { margin-left: 0; }
+.auth-art-avatars span:nth-child(2) { background: linear-gradient(135deg, #1FE3FF, #00C2E0); }
+.auth-art-avatars span:nth-child(3) { background: linear-gradient(135deg, #FFD24D, #F5A800); }
+.auth-art-avatars span.more { background: rgba(255,255,255,.18); }
+.auth-art-card-name { font-weight: 800; font-size: 14.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.auth-art-card-meta { font-size: 12px; color: rgba(255,255,255,.7); }
+.auth-art-card-badge { font-size: 12.5px; font-weight: 800; color: #fff; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius-full); padding: 4px 10px; }
+.auth-art-card-foot { display: flex; align-items: baseline; justify-content: space-between; margin-top: 13px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,.14); }
+.auth-art-card-foot span { font-size: 12.5px; color: rgba(255,255,255,.72); }
+.auth-art-card-foot strong { font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #fff; letter-spacing: -.02em; }
+
+@media (min-width: 980px) {
+  .auth-screen.auth-split { display: grid; grid-template-columns: minmax(360px, .92fr) 1.08fr; min-height: 100dvh; }
+  .auth-screen.auth-split .auth-topbar { background: transparent; border-bottom: 0; }
+  .auth-screen.auth-split .auth-card-brand { display: none; }       /* hindari logo ganda */
+  .auth-screen.auth-split .auth-card { max-width: 460px; }
+
+  .auth-art {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 22px;
+    position: relative; overflow: hidden; isolation: isolate;
+    padding: 46px 48px 42px;
+    background: var(--grad-aurora), var(--grad-night);
+    color: #fff;
+  }
+  .auth-art::after { content: ""; position: absolute; inset: 0; z-index: -1; background-image: var(--noise); mix-blend-mode: overlay; opacity: .5; pointer-events: none; }
+  .auth-art::before { content: ""; position: absolute; z-index: -1; width: 460px; height: 460px; right: -150px; top: -120px; border-radius: 50%; background: radial-gradient(circle, rgba(165,164,255,.5), transparent 64%); }
+  .auth-art-card { animation: sl-float 7s ease-in-out infinite; }
+}
+
+/* Role tabs — segmented control halus (Claude design) */
+.login-role-tab.active { color: var(--brand); font-weight: 700; }
+.login-role-tab:not(.active):hover { color: var(--text-primary); }
+
+/* ---------------------------------------------------------------
+   9b. AUTH UTILITY SCREENS (forgot / reset / check-email / verify /
+   resend) — tetap kartu terpusat, diberi aksen brand + canvas mesh.
+   --------------------------------------------------------------- */
+.auth-screen:not(.auth-split) .auth-body { background: var(--grad-cream-mesh); }
+.auth-screen:not(.auth-split) .auth-card { position: relative; overflow: hidden; }
+.auth-screen:not(.auth-split) .auth-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--grad-brand); }
+
+/* Onboarding — ikon slide pakai shadow brand + dot brand */
+.onboarding-icon-wrap { box-shadow: var(--shadow-brand); }
+.onboarding-dot.active { background: var(--brand); }
+
+/* ---------------------------------------------------------------
+   10. PROJECT / CONTRACT DETAIL — pd-shell (aurora hero + 2 kolom +
+   panel apply sticky). Struktur markup sudah ada; ini treatment
+   design: hero aurora + noise, canvas mesh, angka budget display.
+   --------------------------------------------------------------- */
+.project-detail-hero {
+  background: var(--grad-aurora), var(--grad-night);
+  position: relative; overflow: hidden;
+  min-height: 210px; padding: 22px 22px 26px;
+}
+.project-detail-hero::after { content: ""; position: absolute; inset: 0; background-image: var(--noise); mix-blend-mode: overlay; opacity: .5; pointer-events: none; }
+.project-detail-hero > * { position: relative; z-index: 1; }
+#pd-title { font-family: var(--font-heading); letter-spacing: -.02em; }
+.project-detail-hero .badge { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.26); }
+@media (min-width: 768px) { .project-detail-hero { padding: 30px 32px 34px; min-height: 230px; } }
+
+/* Canvas mesh + kartu sticky elevated */
+.project-detail-body { background: var(--grad-cream-mesh); }
+.pd-sticky .card { box-shadow: var(--shadow-md); }
+#pd-budget, #pd-budget-mob, .pd-budget-big { font-family: var(--font-heading); letter-spacing: -.02em; }
+
+/* Apply bar (mobile) — sedikit blur biar premium */
+.apply-bar { backdrop-filter: saturate(150%) blur(10px); -webkit-backdrop-filter: saturate(150%) blur(10px); }
+.apply-bar #pd-budget-mob { color: var(--brand); }
+
+/* Contract detail — canvas mesh + kartu lembut */
+.cd-canvas { background: var(--grad-cream-mesh); }
+#contract-detail-content .card { box-shadow: var(--shadow-sm); }
+
+/* ---------------------------------------------------------------
+   11. WALLET — hero "grad-night" premium (Claude design money-shell).
+   wallet.js me-render hero dengan inline gradient violet; kita
+   upgrade ke grad-night + glow. (!important utk menimpa inline style)
+   --------------------------------------------------------------- */
+#wallet-hero > div {
+  background: var(--grad-night) !important;
+  box-shadow: var(--shadow-brand) !important;
+}
+#wallet-hero > div::before {
+  content: ""; position: absolute; z-index: 0;
+  width: 320px; height: 320px; right: -120px; top: -140px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,91,255,.45), transparent 64%);
+  pointer-events: none;
+}
+#wallet-hero > div > * { position: relative; z-index: 1; }
+
+/* ---------------------------------------------------------------
+   12. HERO CARD — "living premium": halo aurora berputar mengelilingi
+   kartu (efek "mutar" yang elegan — kartunya tetap diam & terbaca),
+   float-tilt 3D halus, shimmer di pill budget, skill-tag pop saat hover.
+   --------------------------------------------------------------- */
+.hero-card-stage { position: relative; z-index: 0; }
+
+/* Halo cahaya conic yang mengorbit di BELAKANG kartu */
+.hero-card-stage::before {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 110%; aspect-ratio: 1; border-radius: 46%;
+  background: conic-gradient(from 0deg,
+    #8B5BFF 0deg, #5B5BF5 90deg, #2DD4BF 180deg, #5B5BF5 260deg, #8B5BFF 360deg);
+  filter: blur(36px); opacity: .55; z-index: 0; pointer-events: none;
+  animation: sl-orbit 9s linear infinite;
+}
+.hero-card-stage > .hero-card { position: relative; z-index: 1; }
+@keyframes sl-orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Float + tilt 3D halus (override float datar) */
+.hero-card { animation: sl-float3d 7.5s ease-in-out infinite; will-change: transform; }
+@keyframes sl-float3d {
+  0%, 100% { transform: translateY(0) rotate(-.7deg); }
+  50%      { transform: translateY(-12px) rotate(.7deg); }
+}
+
+/* Shimmer sweep di pill budget */
+.hero-card-budget { position: relative; overflow: hidden; }
+.hero-card-budget::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 32%, rgba(255,255,255,.22) 50%, transparent 68%);
+  transform: translateX(-120%);
+  animation: sl-sweep 5s ease-in-out 1.2s infinite;
+}
+@keyframes sl-sweep { 0% { transform: translateX(-120%); } 55%, 100% { transform: translateX(130%); } }
+
+/* Skill tag pop saat hover kartu */
+.hero-skill-tag { transition: transform var(--dur-fast, 140ms) var(--ease-out, ease); }
+.hero-card:hover .hero-skill-tag { transform: translateY(-2px); }
+
+/* ===============================================================
+   13. LANDING BENTO — section + eyebrow-block + bento + feat-ico
+   Port dari design tokens.css supaya "Cara Kerja" & "Fitur" pakai
+   bento color-block + feature-icon chip persis acuan design.
+   =============================================================== */
+.section { padding: 72px var(--gutter); max-width: var(--max-w); margin: 0 auto; width: 100%; }
+.section-cream { background: var(--grad-cream-mesh); padding: 72px 0; }
+.section-cream > .section { padding-top: 0; padding-bottom: 0; }
+.section-ink { background: var(--ink-950); color: var(--fg-on-dark); padding: 72px 0; position: relative; overflow: hidden; }
+.section-ink::before { content:""; position:absolute; inset:0; background-image: var(--noise); mix-blend-mode: overlay; opacity:.4; pointer-events:none; }
+.section-ink > .section { padding-top: 0; padding-bottom: 0; position: relative; }
+
+.eyebrow-block { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 40px; gap: 14px; max-width: 720px; }
+.eyebrow-block.centered { align-items: center; text-align: center; margin-left: auto; margin-right: auto; }
+.eyebrow-block .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--brand); }
+.eyebrow-block.on-dark .eyebrow { color: var(--spark); }
+.eyebrow-block h2 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(28px, 3.5vw + 8px, 48px); line-height: 1.05; letter-spacing: -.035em; margin: 0; text-wrap: balance; color: var(--fg-1); }
+.eyebrow-block.on-dark h2 { color: #fff; }
+.eyebrow-block p { font-size: 16px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 560px; text-wrap: pretty; }
+.eyebrow-block.on-dark p { color: rgba(255,255,255,.7); }
+
+.bento-grid { display: grid; gap: 14px; grid-template-columns: repeat(12, 1fr); }
+.bento-grid .b { padding: 26px; min-height: 200px; }
+.bento-grid .b.span-6, .bento-grid .b.span-4, .bento-grid .b.span-3 { grid-column: span 12; }
+@media (min-width: 720px) {
+  .bento-grid .b.span-6 { grid-column: span 6; }
+  .bento-grid .b.span-4 { grid-column: span 6; }
+  .bento-grid .b.span-3 { grid-column: span 6; }
+}
+@media (min-width: 1000px) {
+  .bento-grid .b.span-6 { grid-column: span 6; }
+  .bento-grid .b.span-4 { grid-column: span 4; }
+  .bento-grid .b.span-3 { grid-column: span 3; }
+}
+
+.b { position: relative; border-radius: var(--r-xl); overflow: hidden; display: flex; flex-direction: column; gap: 12px; transition: transform var(--dur-base) var(--ease-out); }
+.b:hover { transform: translateY(-3px); }
+.b--cream { background: var(--bg-raised); border: 1px solid var(--line-1); color: var(--fg-1); }
+.b--ink   { background: var(--ink-950); color: #fff; }
+.b--brand { background: var(--brand); color: #fff; }
+.b--warm  { background: var(--warm); color: #fff; }
+.b--spark { background: var(--spark); color: var(--ink-950); }
+.b--violet-soft { background: var(--brand-soft); color: var(--brand); }
+.b--warm-soft   { background: var(--warm-soft); color: var(--violet-800); }
+.b--spark-soft  { background: var(--spark-soft); color: var(--violet-700); border: 1px solid var(--violet-200); }
+[data-theme="dark"] .b--warm-soft { color: var(--violet-200); }
+[data-theme="dark"] .b--warm-soft p { opacity: .92; }
+[data-theme="dark"] .b--spark-soft { color: var(--spark); border-color: rgba(165,164,255,.24); }
+[data-theme="dark"] .b--spark-soft p { opacity: .85; }
+
+.b h3 { font-family: var(--font); font-weight: 800; font-size: 21px; line-height: 1.2; letter-spacing: -.015em; margin: 0; color: inherit; }
+.b p  { font-size: 14px; line-height: 1.55; margin: 0; color: inherit; opacity: .85; }
+.b .num { font-family: var(--font-heading); font-weight: 800; font-size: 46px; line-height: 1; letter-spacing: -.04em; }
+
+.feature-tile .feat-ico { width: 48px; height: 48px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; transition: transform var(--dur-base) var(--ease-spring); }
+.feature-tile:hover .feat-ico { transform: translateY(-2px) rotate(-4deg); }
+.feature-tile .feat-ico svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
+.feat-ico--violet     { background: var(--brand-soft); color: var(--brand); }
+.feat-ico--mint       { background: var(--ok-soft);    color: var(--ok-fg); }
+.feat-ico--sky        { background: var(--info-soft);  color: var(--info-fg); }
+.feat-ico--gold       { background: var(--rating-soft);color: var(--rating-fg); }
+.feat-ico--rose       { background: var(--err-soft);   color: var(--err-fg); }
+.feat-ico--periwinkle { background: var(--spark-soft); color: var(--violet-500); }
+[data-theme="dark"] .feat-ico--violet     { color: var(--violet-300); }
+[data-theme="dark"] .feat-ico--mint       { color: var(--mint-300); }
+[data-theme="dark"] .feat-ico--sky        { color: var(--sky-300); }
+[data-theme="dark"] .feat-ico--gold       { color: var(--gold-400); }
+[data-theme="dark"] .feat-ico--rose       { color: var(--rose-300); }
+[data-theme="dark"] .feat-ico--periwinkle { color: var(--spark); }
+
+/* ===============================================================
+   14. AUDIENCE SWITCHER — komponen interaktif Landing
+   Segmented control "Mahasiswa / UMKM" + sliding thumb + panel
+   value-prop yang ditukar via landing.js (setAudience).
+   =============================================================== */
+.aud-switch { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+.aud-toggle {
+  position: relative; display: inline-flex; gap: 4px; padding: 4px;
+  background: var(--bg-sunken); border: 1px solid var(--line-1);
+  border-radius: var(--radius-full);
+}
+.aud-tab {
+  position: relative; z-index: 1; border: none; background: transparent; cursor: pointer;
+  padding: 10px 22px; border-radius: var(--radius-full);
+  font-family: var(--font); font-weight: 700; font-size: 14px; color: var(--fg-2);
+  white-space: nowrap; transition: color var(--dur-fast, 140ms) var(--ease-out);
+}
+.aud-tab.is-active { color: var(--brand); }
+.aud-tab:hover:not(.is-active) { color: var(--fg-1); }
+.aud-thumb {
+  position: absolute; z-index: 0; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px);
+  background: var(--bg-raised); border-radius: var(--radius-full); box-shadow: var(--shadow-sm);
+  transition: transform .3s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.aud-toggle[data-active="business"] .aud-thumb { transform: translateX(100%); }
+[data-theme="dark"] .aud-thumb { background: var(--bg-raised-2); }
+
+.aud-panel { width: 100%; }
+.aud-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+@media (max-width: 760px) { .aud-cards { grid-template-columns: 1fr; } }
+.aud-card {
+  display: flex; flex-direction: column; gap: 10px; padding: 22px;
+  background: var(--bg-raised); border: 1px solid var(--line-1); border-radius: var(--radius-md);
+  transition: transform var(--dur-base, 220ms) var(--ease-out), box-shadow var(--dur-base, 220ms) var(--ease-out);
+}
+.aud-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+[data-theme="dark"] .aud-card { border-color: var(--line-2); }
+.aud-card .feat-ico { width: 44px; height: 44px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; }
+.aud-card .feat-ico svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.aud-card-title { font-family: var(--font); font-weight: 800; font-size: 16px; letter-spacing: -.01em; color: var(--fg-1); }
+.aud-card-desc { font-size: 13.5px; line-height: 1.55; color: var(--fg-2); }
+.aud-cta { display: flex; margin: 0 auto; }
+.aud-fade { animation: sl-fade .42s var(--ease-out, ease); }
+
+/* ===============================================================
+   15. LANDING MOTION — scroll progress, scroll-spy nav, hero tilt,
+   bento hover-focus. (Logika di landing.js)
+   =============================================================== */
+/* Progress bar tipis di paling atas (hanya tampil saat #screen-landing aktif) */
+.sl-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1000; pointer-events: none; }
+.sl-progress span {
+  display: block; height: 100%; width: 100%;
+  background: var(--grad-brand);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .08s linear;
+}
+
+/* Scroll-spy: nav link aktif */
+.l-nav-link { position: relative; transition: color var(--dur-fast, 140ms) var(--ease-out); }
+.l-nav-links .l-nav-link.is-active { color: var(--brand); background: transparent; }
+.l-nav-links .l-nav-link.is-active::after {
+  content: ""; position: absolute; left: 10px; right: 10px; bottom: -2px; height: 2px;
+  background: var(--brand); border-radius: 2px;
+}
+
+/* Hero card tilt mengikuti kursor (smoothing + reset) */
+.hero-card-stage { transition: transform .2s var(--ease-out, ease); transform-style: preserve-3d; }
+
+/* Bento hover-focus: tile yang di-hover menonjol, sibling sedikit meredup */
+@media (hover: hover) {
+  .bento-grid:hover .b:not(:hover) { opacity: .72; transition: opacity var(--dur-base, 220ms) var(--ease-out); }
+}
+
+/* ===============================================================
+   16. CTA BANNER — aurora set-piece (mirip hero, bookend landing)
+   Override background main.css dari plain violet gradient →
+   grad-aurora premium + noise texture, agar CTA terasa sekaliber
+   hero saat user sampai di akhir landing.
+   =============================================================== */
+.cta-banner {
+  background: var(--grad-aurora);
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: var(--noise);
+  mix-blend-mode: overlay; opacity: .4; pointer-events: none;
+}
+.cta-banner .container { position: relative; z-index: 1; }
+
+/* ===============================================================
+   17. ADMIN PANEL POLISH — Access Control, audit feed, project
+   table, settings layout. Rapikan agar setara design system.
+   =============================================================== */
+/* Settings: kolom Role lebar + aside sticky pengaturan, hindari
+   kolom kanan "melar kosong" (align ke konten). */
+.admin-settings-grid {
+  display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 18px;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .admin-settings-grid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+  .admin-settings-aside { position: sticky; top: 18px; }
+}
+
+/* Field helper text */
+.form-help { font-size: 12px; line-height: 1.5; color: var(--text-muted); margin: 0; }
+
+/* Tombol ikon ringkas (hapus, dsb.) */
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--bg-surface);
+  color: var(--text-muted); cursor: pointer; flex-shrink: 0;
+  transition: background var(--dur-fast,140ms) var(--ease-out),
+              color var(--dur-fast,140ms) var(--ease-out),
+              border-color var(--dur-fast,140ms) var(--ease-out),
+              transform var(--dur-fast,140ms) var(--ease-out);
+}
+.icon-btn:hover { transform: translateY(-1px); }
+.icon-btn--danger:hover { background: var(--err-soft); color: var(--err-fg); border-color: var(--err-soft); }
+
+/* Access role card */
+.access-role-card {
+  background: var(--bg-surface); border: 1px solid var(--line-1);
+  border-radius: var(--radius-md); padding: 16px; margin-bottom: 10px;
+  position: relative; overflow: hidden;
+  transition: border-color var(--dur-base,220ms) var(--ease-out),
+              box-shadow var(--dur-base,220ms) var(--ease-out),
+              transform var(--dur-base,220ms) var(--ease-out);
+}
+.access-role-card::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--brand); opacity: 0; transition: opacity var(--dur-base,220ms) var(--ease-out);
+}
+.access-role-card:hover { border-color: var(--brand-glow, var(--brand)); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.access-role-card:hover::before { opacity: 1; }
+.access-role-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.access-role-name { font-family: var(--font-heading); font-size: 15px; font-weight: 700; letter-spacing: -0.01em; display: inline-flex; align-items: center; gap: 8px; }
+.access-role-tag {
+  font-family: var(--font); font-size: 9px; font-weight: 800; letter-spacing: .08em;
+  background: var(--brand-soft); color: var(--brand);
+  padding: 2px 7px; border-radius: var(--radius-full);
+}
+.access-role-desc { font-size: 12.5px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+.access-role-members { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.access-member-avatar {
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  background: var(--brand-soft); color: var(--brand);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; margin-left: -6px;
+  border: 2px solid var(--bg-surface);
+}
+.access-member-avatar:first-child { margin-left: 0; }
+.access-role-members-label { font-size: 12px; color: var(--text-muted); }
+.perm-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.perm-chip {
+  font-size: 11px; font-weight: 600; color: var(--text-secondary);
+  background: var(--bg-sunken); border: 1px solid var(--line-1);
+  padding: 3px 9px; border-radius: var(--radius-full); white-space: nowrap;
+  transition: background var(--dur-fast,140ms) var(--ease-out), color var(--dur-fast,140ms) var(--ease-out);
+}
+.access-role-card:hover .perm-chip { background: var(--brand-soft); color: var(--brand); border-color: transparent; }
+.perm-chip--empty { color: var(--text-muted); background: transparent; }
+.access-role-card:hover .perm-chip--empty { background: transparent; color: var(--text-muted); }
+.access-role-card--add { border-style: dashed; background: transparent; }
+.access-role-card--add:hover { transform: none; box-shadow: none; }
+.access-role-card--add::before { display: none; }
+.access-role-add-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; display: inline-flex; align-items: center; gap: 6px; color: var(--brand); }
+
+/* Audit feed: titik gradient + garis penghubung halus */
+.admin-feed-dot { background: var(--grad-brand); box-shadow: 0 0 0 4px var(--brand-soft); }
+#admin-audit-list .admin-feed-item { padding: 12px 0; }
+
+/* Project management table → kartu rapi, header sticky, hover lift */
+#admin-projects-table .card, #admin-project-list .card { border: 1px solid var(--line-1); border-radius: var(--radius-md); }
+.admin-project-row { transition: background var(--dur-fast,140ms) var(--ease-out), box-shadow var(--dur-fast,140ms) var(--ease-out); }
+.admin-project-row:hover { box-shadow: inset 3px 0 0 var(--brand); }
+
+/* Sort toggle: kelihatan seperti kontrol, bukan teks polos */
+#admin-project-sort-btn {
+  border: 1px solid var(--line-1); display: inline-flex; align-items: center; gap: 6px;
+}
+#admin-project-sort-btn::before {
+  content: ""; width: 13px; height: 13px; flex-shrink: 0;
+  background: currentColor; opacity: .7;
+  --icon-sort: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6h13M4 12h9M4 18h5'/%3E%3C/svg%3E");
+  -webkit-mask: var(--icon-sort) center/contain no-repeat; mask: var(--icon-sort) center/contain no-repeat;
+}
+
+/* Tab panel admin: entrance fade-up halus tiap pindah tab */
+.tab-panel.active { animation: sl-fade .42s var(--ease-out, ease); }
+
+/* Stagger helper (dipakai daftar yang di-render JS, mis. role cards).
+   fill-mode `backwards`: tutup jeda delay tanpa menahan transform setelah
+   selesai → hover lift kartu tetap jalan. */
+.sl-stagger { animation: sl-fade .5s var(--ease-out, ease) backwards; animation-delay: calc(var(--i, 0) * 60ms); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-panel.active, .sl-stagger, .access-role-card, .icon-btn { animation: none !important; }
+}
+
+/* ===============================================================
+   18. INTERACTION LAYER — micro-interactions seluruh app shell
+   (sidebar, bottom-nav, chips, stat tiles, input, modal). Semua
+   ringan, hormati reduced-motion, dan pakai token easing.
+   =============================================================== */
+
+/* Tombol: tekan terasa (scale halus) untuk feedback taktil */
+.btn:active { transform: translateY(0) scale(.975); }
+
+/* Sidebar item: geser halus + indikator aktif yang tumbuh dari kiri */
+.sidebar-item { position: relative; transition: background var(--dur-fast,140ms) var(--ease-out), color var(--dur-fast,140ms) var(--ease-out), transform var(--dur-fast,140ms) var(--ease-out); }
+.sidebar-item:hover { transform: translateX(3px); }
+.sidebar-item::before {
+  content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 0; border-radius: 0 3px 3px 0; background: var(--brand);
+  transition: height var(--dur-base,220ms) var(--ease-spring, ease);
+}
+.sidebar-item.active::before { height: 60%; }
+.sidebar-item svg { transition: transform var(--dur-base,220ms) var(--ease-spring, ease); }
+.sidebar-item.active svg { transform: scale(1.08); }
+
+/* Bottom-nav (mobile): ikon aktif pop + label muncul */
+.bnav-item { transition: color var(--dur-fast,140ms) var(--ease-out); }
+.bnav-item svg { transition: transform var(--dur-base,220ms) var(--ease-spring, ease); }
+.bnav-item.active svg { transform: translateY(-2px) scale(1.12); }
+
+/* Filter chips: transisi mulus + tekan */
+.filter-chip { transition: background var(--dur-fast,140ms) var(--ease-out), color var(--dur-fast,140ms) var(--ease-out), border-color var(--dur-fast,140ms) var(--ease-out), transform var(--dur-fast,140ms) var(--ease-out); }
+.filter-chip:active { transform: scale(.94); }
+
+/* Stat tiles dashboard: entrance fade-up stagger saat tab/screen aktif.
+   NB: pakai fill-mode `backwards` (bukan `both`) supaya transform tidak
+   "tertahan" setelah animasi → hover lift di bawah tetap berfungsi. */
+.screen.active .bento-dash .stat-tile,
+.tab-panel.active .bento-dash .stat-tile {
+  animation: sl-pop .5s var(--ease-out, ease) backwards;
+}
+.bento-dash .stat-tile:nth-child(1) { animation-delay: .03s; }
+.bento-dash .stat-tile:nth-child(2) { animation-delay: .09s; }
+.bento-dash .stat-tile:nth-child(3) { animation-delay: .15s; }
+.bento-dash .stat-tile:nth-child(4) { animation-delay: .21s; }
+.bento-dash .stat-tile:nth-child(5) { animation-delay: .27s; }
+/* NB: hover lift stat-tile sudah ada di §2c (.bento-dash .stat-tile:hover)
+   dan .search-bar:focus-within sudah ada di §10 — tidak diulang di sini. */
+
+/* Input fokus: transisi mulus + lengkapi .form-select (input & textarea
+   sudah punya ring --accent-glow di main.css). Pakai --brand-glow agar
+   konsisten dgn ring yang sudah ada. */
+.form-input, .form-select, .form-textarea, .search-bar input {
+  transition: border-color var(--dur-fast,140ms) var(--ease-out), box-shadow var(--dur-fast,140ms) var(--ease-out), background var(--dur-fast,140ms) var(--ease-out);
+}
+.form-select:focus {
+  border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); outline: none;
+}
+
+/* NB: modal/bottom-sheet entrance SUDAH ditangani main.css (slideUp di
+   mobile = translateY(100%)→0, zoomIn di desktop). JANGAN override di sini
+   — pernah dicoba dan malah men-downgrade slide bottom-sheet mobile. */
+
+/* Card generik di dashboard: hover lift lembut */
+.app-main .card.card-hover,
+.app-main .card[onclick],
+.admin-overview-grid .card { transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out), border-color var(--dur-base,220ms) var(--ease-out); }
+.app-main .card[onclick]:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+/* Toggle tema: ikon berputar saat ditekan */
+.theme-btn svg { transition: transform var(--dur-base,220ms) var(--ease-spring, ease); }
+.theme-btn:hover svg { transform: rotate(18deg) scale(1.08); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:active, .sidebar-item, .sidebar-item:hover, .sidebar-item svg,
+  .bnav-item svg, .filter-chip:active, .stat-tile, .stat-tile:hover,
+  .screen.active .bento-dash .stat-tile, .tab-panel.active .bento-dash .stat-tile,
+  .app-main .card[onclick]:hover, .theme-btn:hover svg {
+    animation: none !important; transform: none !important;
+  }
+}
+
+/* ===============================================================
+   19. REMAINING SCREENS — portfolio, public profile, chat, notifications,
+   payment history, FAQ, wallet, dispute, bank. Polish agar setara
+   dengan landing + admin yang sudah diperbarui.
+   =============================================================== */
+
+/* ---- Portfolio: hero aurora set-piece (replace old navy gradient) ---- */
+.portfolio-hero-banner {
+  background: var(--grad-aurora);
+  position: relative; overflow: hidden; isolation: isolate;
+  color: #fff;
+}
+.portfolio-hero-banner::after {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background-image: var(--noise);
+  mix-blend-mode: overlay; opacity: .4; pointer-events: none;
+}
+.portfolio-hero-banner > * { position: relative; z-index: 1; }
+/* Badge di dalam hero banner: glass pill */
+.portfolio-hero-banner .badge {
+  background: rgba(255,255,255,.15); color: #fff;
+  border: 1px solid rgba(255,255,255,.28);
+}
+.portfolio-hero-banner .badge-teal { background: rgba(31,185,125,.28); color: #a7f3d0; }
+.portfolio-hero-banner .badge-accent { background: rgba(165,164,255,.28); color: #e0dfff; }
+
+/* ---- Public profile: aurora header (pub-profile-header class) ---- */
+.pub-profile-header {
+  background: var(--grad-aurora);
+  position: relative; overflow: hidden; isolation: isolate;
+}
+.pub-profile-header::after {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background-image: var(--noise);
+  mix-blend-mode: overlay; opacity: .4; pointer-events: none;
+}
+.pub-profile-header > * { position: relative; z-index: 1; }
+
+/* ---- Notification items: unread = brand left bar instead of plain accent ---- */
+#notif-list .card { transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out); }
+#notif-list .card:hover { transform: translateX(3px); box-shadow: var(--shadow-sm); }
+
+/* ---- Chat room: send button brand, avatar brand-soft, status ok-fg ---- */
+#chat-room-status { color: var(--ok-fg); }
+#chat-messages { background: var(--bg-primary); }
+/* Message area subtle inset feel */
+#chat-room-context { background: var(--bg-raised); border-radius: var(--radius-sm); }
+
+/* ---- FAQ: brand accent when open, left border indicator ---- */
+.faq-item { transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out); }
+.faq-item:has(.faq-question.open) { box-shadow: inset 3px 0 0 var(--brand); }
+.faq-question.open { color: var(--brand); background: var(--brand-soft); }
+
+/* ---- Payment history summary bar: brand tone ---- */
+#screen-payment-history .auth-screen > div:nth-child(3) {
+  background: var(--brand-soft);
+  border-bottom: 1px solid var(--brand-soft-border, var(--line-1));
+}
+
+/* (Wallet hero card sudah distyle di §11 — grad-night + glow. Blok grad-aurora
+   yang sebelumnya di sini DIHAPUS karena duplikat & menimpa diam-diam §11.) */
+
+/* ---- Bank account: remove hardcoded teal border, use brand ---- */
+#bank-accounts-list .card { border-left-color: var(--ok); }
+.info-box--teal { background: var(--ok-soft); border-color: rgba(31,185,125,.3); }
+.info-box--teal p, .info-box--teal svg { color: var(--ok-fg) !important; stroke: var(--ok-fg) !important; }
+
+/* ---- Dispute list info box: brand-tinted warning style ---- */
+#screen-dispute-list .info-box { background: var(--warn-soft); border-color: var(--warn-soft-border, rgba(230,149,0,.28)); }
+#screen-dispute-list .info-box svg { stroke: var(--warn-fg); }
+#screen-dispute-list .info-box p { color: var(--warn-fg); }
+
+/* ---- Deliverable upload drop zone: brand accent on hover ---- */
+.ktm-upload-area {
+  transition: border-color var(--dur-base,220ms) var(--ease-out),
+              background var(--dur-base,220ms) var(--ease-out),
+              transform var(--dur-base,220ms) var(--ease-out);
+}
+.ktm-upload-area:hover { transform: translateY(-2px); }
+
+/* ---- Contract detail: progress steps brand ---- */
+#contract-detail-content .step-dot.done,
+#contract-detail-content .step-dot.active { background: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); }
+#contract-detail-content .step-line.done { background: var(--grad-brand); }
+
+/* ---- Verification steps: brand active indicator ---- */
+#verif-step-indicator .step-dot.active { box-shadow: 0 0 0 4px var(--brand-glow); }
+
+/* ---- Settings screen: section headings consistent ---- */
+#screen-settings .settings-list { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line-1); }
+.settings-item { transition: background var(--dur-fast,140ms) var(--ease-out); }
+.settings-item:hover { background: var(--bg-sunken); }
+/* Toggle active state uses brand color */
+.toggle-track { background: var(--line-2); transition: background var(--dur-base,220ms) var(--ease-out); }
+input[type="checkbox"]:checked + .toggle-track { background: var(--brand); }
+
+/* ---- Stagger reveal for card lists (notifications, FAQ items) ---- */
+#notif-list .card { animation: sl-fade .4s var(--ease-out,ease) backwards; }
+#notif-list .card:nth-child(2) { animation-delay: 60ms; }
+#notif-list .card:nth-child(3) { animation-delay: 120ms; }
+#notif-list .card:nth-child(4) { animation-delay: 180ms; }
+#notif-list .card:nth-child(5) { animation-delay: 240ms; }
+#faq-list .faq-item { animation: sl-fade .38s var(--ease-out,ease) backwards; }
+#faq-list .faq-item:nth-child(2) { animation-delay: 40ms; }
+#faq-list .faq-item:nth-child(3) { animation-delay: 80ms; }
+#faq-list .faq-item:nth-child(4) { animation-delay: 120ms; }
+#faq-list .faq-item:nth-child(5) { animation-delay: 160ms; }
+#faq-list .faq-item:nth-child(6) { animation-delay: 200ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-hero-banner::after, .pub-profile-header::after,
+  #wallet-hero > div::before, #notif-list .card, #faq-list .faq-item { animation: none !important; }
+}

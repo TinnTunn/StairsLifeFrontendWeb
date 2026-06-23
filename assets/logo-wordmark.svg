@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" fill="none">
+  
+  <g transform="translate(0,12)">
+    <rect x="0" y="40" width="56" height="16" rx="2" fill="#5B5BF5"></rect>
+    <rect x="8" y="22" width="40" height="14" rx="2" fill="#5B5BF5"></rect>
+    <rect x="16" y="6" width="24" height="12" rx="2" fill="#5B5BF5"></rect>
+  </g>
+  
+  <text x="74" y="58" font-family="&#39;Manrope&#39;,&#39;Segoe UI&#39;,system-ui,sans-serif" font-weight="800" font-size="56" letter-spacing="-2.5" fill="#0E0D3D">stairslife</text>
+</svg>
