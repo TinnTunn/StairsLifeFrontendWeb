@@ -64,8 +64,8 @@ async function renderAdminOverview() {
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1, color: 'var(--text-muted)' }, grid: { color: 'rgba(128,128,128,0.1)' } },
-            x: { ticks: { color: 'var(--text-muted)', maxTicksLimit: 8 }, grid: { display: false } },
+            y: { beginAtZero: true, ticks: { stepSize: 1, color: slChartInk() }, grid: { color: 'rgba(128,128,128,0.1)' } },
+            x: { ticks: { color: slChartInk(), maxTicksLimit: 8 }, grid: { display: false } },
           },
         },
       });
@@ -91,8 +91,8 @@ async function renderAdminOverview() {
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1, color: 'var(--text-muted)' }, grid: { color: 'rgba(128,128,128,0.1)' } },
-            x: { ticks: { color: 'var(--text-muted)', maxTicksLimit: 8 }, grid: { display: false } },
+            y: { beginAtZero: true, ticks: { stepSize: 1, color: slChartInk() }, grid: { color: 'rgba(128,128,128,0.1)' } },
+            x: { ticks: { color: slChartInk(), maxTicksLimit: 8 }, grid: { display: false } },
           },
         },
       });

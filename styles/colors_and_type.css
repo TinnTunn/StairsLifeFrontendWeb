@@ -168,6 +168,21 @@
   --rating-fg:          var(--gold-700);
   --rating-empty:       var(--ink-200);
 
+  /* Auth aurora — full-bleed background for login/register, theme-aware.
+     Light = white base with violet glows ("ungu kegelapan → putih tapi tetap
+     ada ungunya"); dark variant lives in [data-theme="dark"]. Text + glass
+     tokens flip so content stays readable on whichever aurora. */
+  --grad-auth:
+    radial-gradient(55% 50% at 16% 8%,   rgba(91,91,245,0.16) 0%, transparent 60%),
+    radial-gradient(48% 48% at 88% 2%,    rgba(139,91,255,0.14) 0%, transparent 62%),
+    radial-gradient(62% 60% at 82% 100%,  rgba(165,164,255,0.20) 0%, transparent 60%),
+    linear-gradient(160deg, #ECE8FF 0%, #F7F5FF 52%, #FFFFFF 100%);
+  --auth-fg:            #1B1838;
+  --auth-fg-dim:        #4C4870;
+  --auth-glass:         rgba(255,255,255,0.60);
+  --auth-glass-bd:      rgba(91,91,245,0.18);
+  --auth-accent:        var(--brand);
+
   /* ============================================================
      GRADIENTS & MESHES — Set-piece backgrounds
      ============================================================ */
@@ -299,26 +314,27 @@
    DARK THEME — Inverts surfaces, keeps brand vivid
    ================================================================ */
 [data-theme="dark"] {
-  /* Elevation ladder — deep NAVY-BLUE, sharing the brand's blue hue (≈235°).
-     Each step lifts toward a warmer blue so surfaces read as a cohesive
-     ecosystem, not a flat monotone. Saturated accents still pop. */
-  --bg-base:           #0B1124;   /* canvas — deep navy blue */
-  --bg-sunken:         #070C1B;   /* insets, input fills, code — deepest */
-  --bg-raised:         #15203D;   /* cards / panels — lighter navy */
-  --bg-raised-2:       #1F2D50;   /* card hover / nested raised — blue lifts */
-  --bg-overlay:        rgba(7,12,27,0.82);
+  /* Elevation ladder — deep INK-VIOLET, sharing the brand's violet hue (≈250°)
+     at low saturation. Same hue family as the light theme's violet accents, so
+     dark reads as the SAME ecosystem as white — smooth, not a blue detour.
+     Steps are gentle so surfaces lift softly. Saturated accents still pop. */
+  --bg-base:           #0F0E1E;   /* canvas — deep ink-violet */
+  --bg-sunken:         #0A0916;   /* insets, input fills, code — deepest */
+  --bg-raised:         #191730;   /* cards / panels */
+  --bg-raised-2:       #221F3C;   /* card hover / nested raised */
+  --bg-overlay:        rgba(10,9,22,0.84);
   --bg-inverted:       var(--ink-25);
 
-  --fg-1:              #EEF1FB;
-  --fg-2:              #AFB7D4;   /* cool blue-gray, harmonized with navy */
-  --fg-3:              #7C85A8;
-  --fg-4:              #515A7C;
+  --fg-1:              #EFEDFA;   /* near-white, faint violet */
+  --fg-2:              #C3BFDD;   /* secondary — brighter so sidebar/labels read crisp on dark */
+  --fg-3:              #9E99C0;   /* muted — was #7E7AA0 (~3.7:1, failed AA); now ~6:1 (AA pass) */
+  --fg-4:              #565279;
   --fg-on-dark:        var(--ink-25);
 
-  /* Borders — cool blue-tinted whites so edges read on navy */
-  --line-1:            rgba(150,170,255,0.14);
-  --line-2:            rgba(150,170,255,0.22);
-  --line-strong:       rgba(160,180,255,0.32);
+  /* Borders — violet-tinted whites so edges read on ink-violet */
+  --line-1:            rgba(170,160,255,0.13);
+  --line-2:            rgba(170,160,255,0.20);
+  --line-strong:       rgba(180,170,255,0.30);
 
   --brand-soft:        rgba(91,91,245,0.24);
   --brand-soft-border: rgba(128,126,250,0.48);
@@ -333,11 +349,39 @@
   --rating-soft:       rgba(245,168,0,0.20);
   --rating-empty:      rgba(160,180,255,0.18);
 
-  /* Mesh — soft blue/violet corner glows over the navy base, so the canvas
-     has gentle depth & color life instead of reading flat/monotone. */
-  --grad-cream-mesh:   radial-gradient(75% 55% at 0% 0%,   rgba(91,91,245,0.16) 0%, transparent 55%),
-                       radial-gradient(65% 55% at 100% 6%,  rgba(42,156,239,0.12) 0%, transparent 58%),
-                       radial-gradient(80% 60% at 60% 100%, rgba(139,91,255,0.10) 0%, transparent 60%),
+  /* Semantic FOREGROUND text — CRITICAL for dark readability. Light mode
+     uses *-700 (dark) text on pale soft fills; in dark the soft fills flip
+     dark, so the text MUST flip light (*-300) or it becomes near-invisible
+     (was contrast ~2 on amber/rose/teal/indigo). Aliases used directly in
+     main.css (--amber-dark / --rose-dark / --teal-dark / --accent-dark) are
+     re-pointed here too so every consumer flips. */
+  --ok-fg:             var(--mint-300);
+  --info-fg:           var(--sky-300);
+  --warn-fg:           var(--amber-300);
+  --err-fg:            var(--rose-300);
+  --rating-fg:         var(--gold-300);
+  /* --amber-dark/--rose-dark/--teal-dark alias to --*-fg (main.css) so they
+     flip automatically with the lines above. --accent-dark points straight at
+     violet-700, so its text consumers are flipped in redesign.css (loads last,
+     beats main.css :root which has equal specificity to [data-theme]). */
+
+  /* Auth aurora — dark variant (ink-violet base, vivid violet glows) */
+  --grad-auth:
+    radial-gradient(55% 50% at 16% 8%,   rgba(123,108,255,0.42) 0%, transparent 60%),
+    radial-gradient(50% 48% at 90% 2%,    rgba(139,91,255,0.38) 0%, transparent 62%),
+    radial-gradient(62% 62% at 82% 100%,  rgba(91,91,245,0.30) 0%, transparent 60%),
+    linear-gradient(160deg, #16142F 0%, #0F0E1E 58%, #0B0A18 100%);
+  --auth-fg:           #FFFFFF;
+  --auth-fg-dim:       rgba(255,255,255,0.78);
+  --auth-glass:        rgba(255,255,255,0.08);
+  --auth-glass-bd:     rgba(255,255,255,0.16);
+  --auth-accent:       var(--spark);
+
+  /* Mesh — soft violet corner glows over the ink-violet base, so the canvas
+     has gentle depth & color life (same hue family as light), not flat. */
+  --grad-cream-mesh:   radial-gradient(75% 55% at 0% 0%,   rgba(123,108,255,0.16) 0%, transparent 55%),
+                       radial-gradient(65% 55% at 100% 6%,  rgba(91,91,245,0.13) 0%, transparent 58%),
+                       radial-gradient(80% 60% at 60% 100%, rgba(165,164,255,0.10) 0%, transparent 60%),
                        var(--bg-base);
 
   --shadow-xs:   0 1px 1px rgba(0,0,0,0.40);

@@ -85,6 +85,8 @@
 
   <!-- HERO -->
   <section class="hero">
+    <span class="sl-orb sl-orb--spark" data-parallax="-0.14" aria-hidden="true"></span>
+    <span class="sl-orb sl-orb--gold" data-parallax="0.18" aria-hidden="true"></span>
     <div class="hero-inner">
       <div class="hero-layout">
         <div style="flex:1">
@@ -135,10 +137,10 @@
   <!-- STATS -->
   <section class="stats-banner">
     <div class="stats-grid">
-      <div class="stat-item"><div class="stat-val">500+</div><div class="stat-lbl">Mahasiswa Aktif</div></div>
-      <div class="stat-item"><div class="stat-val">200+</div><div class="stat-lbl">Project Selesai</div></div>
-      <div class="stat-item"><div class="stat-val">50+</div><div class="stat-lbl">UMKM Bergabung</div></div>
-      <div class="stat-item"><div class="stat-val">4.8★</div><div class="stat-lbl">Rating Platform</div></div>
+      <div class="stat-item sl-zoom"><div class="stat-val">500+</div><div class="stat-lbl">Mahasiswa Aktif</div></div>
+      <div class="stat-item sl-zoom"><div class="stat-val">200+</div><div class="stat-lbl">Project Selesai</div></div>
+      <div class="stat-item sl-zoom"><div class="stat-val">50+</div><div class="stat-lbl">UMKM Bergabung</div></div>
+      <div class="stat-item sl-zoom"><div class="stat-val">4.8★</div><div class="stat-lbl">Rating Platform</div></div>
     </div>
   </section>
 
@@ -173,7 +175,7 @@
           <p>Buat akun, lengkapi data, dan verifikasi KTM atau email kampus agar kerja sama lebih aman.</p>
         </div>
         <div class="b b--cream span-6 sl-reveal sl-d1">
-          <div class="num" style="color:var(--warm)">02</div>
+          <div class="num num--warm">02</div>
           <h3>Match &amp; Sepakati Scope</h3>
           <p>Cari atau unggah kebutuhan. Diskusikan deliverables, deadline, budget — lalu kunci di kontrak digital.</p>
         </div>
@@ -220,7 +222,7 @@
         <p>Project dipecah jadi tugas kecil yang fit dengan jadwal kuliah.</p>
       </div>
       <div class="b b--cream feature-tile span-4 sl-reveal sl-d1">
-        <div class="feat-ico feat-ico--rose"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="feat-ico feat-ico--gold"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <h3>Sistem Tier</h3>
         <p>Naik tier seiring pengalaman: Pemula → Menengah → Mahir.</p>
       </div>
@@ -241,8 +243,8 @@
         <p>StairsLife lahir dari kebutuhan nyata — menghubungkan mahasiswa berbakat dengan UMKM yang butuh bantuan nyata.</p>
       </div>
 
-      <div class="grid-2" style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:16px; align-items:stretch">
-        <div class="card card-p-lg">
+      <div class="grid-2" style="display:grid; gap:16px; align-items:stretch">
+        <div class="card card-p-lg sl-left">
           <h3 style="font-size:15px; font-weight:800; margin-bottom:10px">Sejarah Singkat</h3>
           <p style="font-size:14px; color:var(--text-secondary); line-height:1.75; margin-bottom:14px">
             StairsLife lahir dari problem yang sering ditemui: mahasiswa punya skill dan waktu fleksibel, tapi sulit menemukan project yang aman dan relevan;
@@ -281,7 +283,7 @@
           </div>
         </div>
 
-        <div class="card card-p-lg">
+        <div class="card card-p-lg sl-right">
           <h3 style="font-size:15px; font-weight:800; margin-bottom:10px">Nilai yang Kami Pegang</h3>
           <div style="display:grid; gap:10px">
             <div style="display:flex; gap:10px">
@@ -424,13 +426,23 @@
     <div class="auth-split">
       <!-- KIRI: art column aurora (desktop only) -->
       <aside class="auth-art">
-        <div class="flex items-center gap-sm">
-          <div class="logo-mark" style="width:32px;height:32px;color:var(--spark)"><svg viewBox="0 0 64 64"><rect x="4" y="40" width="56" height="16" rx="2"/><rect x="12" y="22" width="40" height="14" rx="2"/><rect x="20" y="6" width="24" height="12" rx="2"/></svg></div>
-          <span class="logo-text logo-text--white" style="font-size:20px">stairslife</span>
-        </div>
         <div>
           <h1 id="auth-art-title">Mulai naik <span class="accent">tangga karir</span>. Project demi project.</h1>
           <p id="auth-art-desc">Setiap project selesai = satu anak tangga. Verifikasi KTM, escrow payment, dan portofolio otomatis yang ikut kamu lulus.</p>
+          <div class="aart-floats" aria-hidden="true">
+            <div class="aart-float">
+              <span class="aart-float__ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+              <span class="aart-float__tx"><b>Verifikasi KTM</b><span>Profil mahasiswa tepercaya</span></span>
+            </div>
+            <div class="aart-float">
+              <span class="aart-float__ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+              <span class="aart-float__tx"><b>Pembayaran Escrow</b><span>Dana ditahan sampai beres</span></span>
+            </div>
+            <div class="aart-float">
+              <span class="aart-float__ic"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
+              <span class="aart-float__tx"><b>Portofolio Otomatis</b><span>CV nyata yang ikut tumbuh</span></span>
+            </div>
+          </div>
         </div>
         <div class="auth-quote">
           <div class="q" id="auth-art-quote">"Saya dapat tiga klien tetap dari StairsLife. Sekarang punya cukup buat bayar UKT sendiri."</div>
@@ -438,7 +450,7 @@
             <div class="av" id="auth-art-who-av">D</div>
             <div>
               <div style="font-size:13px;font-weight:700" id="auth-art-who">Dina, Semester 5</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.6)" id="auth-art-whosub">Universitas Brawijaya · 12 project</div>
+              <div style="font-size:12px" id="auth-art-whosub">Universitas Brawijaya · 12 project</div>
             </div>
           </div>
         </div>
@@ -462,12 +474,6 @@
           <button class="login-role-tab active" role="tab" id="lrtab-0" onclick="switchLoginRole(0)">🎓 Mahasiswa</button>
           <button class="login-role-tab" role="tab" id="lrtab-1" onclick="switchLoginRole(1)">🏢 Pemilik Bisnis</button>
           <button class="login-role-tab" role="tab" id="lrtab-2" onclick="switchLoginRole(2)">🛡️ Admin</button>
-        </div>
-
-        <!-- Admin hint -->
-        <div id="admin-hint" class="info-box" style="display:none; margin-bottom:16px; border-color:rgba(244,63,94,0.3); background:var(--rose-light)">
-          <svg viewBox="0 0 24 24" style="stroke:var(--rose-dark)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <p style="color:var(--rose-dark)"><strong>Kredensial Dev:</strong><br>Email: <code>admin@stairslife.id</code><br>Password: <code>admin123</code></p>
         </div>
 
         <!-- Form -->
@@ -617,6 +623,9 @@
       </div>
     </nav>
     <div class="sidebar-footer">
+      <div class="sidebar-item sidebar-theme" onclick="toggleTheme()" role="button" tabindex="0">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>Tema Gelap / Terang
+      </div>
       <div class="sidebar-logout" onclick="handleLogout()">
         <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Keluar
       </div>
@@ -651,31 +660,34 @@
           <div class="verify-alert-title">Verifikasi KTM Kamu</div>
           <div class="verify-alert-sub">Lengkapi verifikasi untuk mulai melamar project dan mendapatkan kepercayaan dari klien.</div>
         </div>
-        <button class="btn btn-sm" style="background:var(--amber-dark);color:white;white-space:nowrap" onclick="switchStudentTab(4)">Verifikasi</button>
+        <button class="btn btn-sm" style="background:var(--warn);color:var(--ink-950);font-weight:700;white-space:nowrap" onclick="switchStudentTab(4)">Verifikasi</button>
       </div>
 
       <!-- Stats (bento) -->
       <div class="bento-dash">
         <div class="stat-tile stat-tile--violet">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span></div>
           <div class="bento-overline">Project Selesai</div>
           <div class="bento-big" id="st-stat-projects">—</div>
           <div class="bento-cap">Total selesai</div>
         </div>
         <div class="stat-tile stat-tile--mint">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span></div>
           <div class="bento-overline">Total Penghasilan</div>
           <div class="bento-big" id="st-stat-earnings" style="font-size:26px">—</div>
           <div class="bento-cap">Dana diterima</div>
         </div>
         <div class="stat-tile stat-tile--gold">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div>
           <div class="bento-overline">Rating Rata-rata</div>
           <div class="bento-big" id="st-stat-rating">—</div>
           <div class="bento-cap">Dari klien</div>
         </div>
         <div class="stat-tile stat-tile--rose">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span><span class="st-trend st-trend--flat"><span class="live-dot"></span>Live</span></div>
           <div class="bento-overline">Project Aktif</div>
           <div class="bento-big" id="st-stat-active">—</div>
           <div class="bento-cap">Sedang berjalan</div>
-          <span class="ink-dot"></span>
         </div>
       </div>
 
@@ -806,11 +818,6 @@
           <span>Bantuan & FAQ</span>
           <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="settings-item" onclick="toggleTheme()">
-          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
-          <span>Dark / Light Mode</span>
-          <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
         <div class="settings-item danger" onclick="handleLogout()">
           <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           <span>Keluar</span>
@@ -877,6 +884,7 @@
       <div class="sidebar-item" data-tab="5" onclick="switchBizTab(5)"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profil Bisnis</div>
     </nav>
     <div class="sidebar-footer">
+      <div class="sidebar-item sidebar-theme" onclick="toggleTheme()" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>Tema Gelap / Terang</div>
       <div class="sidebar-logout" onclick="handleLogout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Keluar</div>
     </div>
   </aside>
@@ -890,22 +898,25 @@
       </div>
       <div class="bento-dash">
         <div class="stat-tile stat-tile--violet">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span></div>
           <div class="bento-overline">Total Project</div>
           <div class="bento-big" id="biz-stat-total">—</div>
           <div class="bento-cap">Dipasang</div>
         </div>
         <div class="stat-tile stat-tile--mint">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div>
           <div class="bento-overline">Lamaran Masuk</div>
           <div class="bento-big" id="biz-stat-apps">—</div>
           <div class="bento-cap">Dari mahasiswa</div>
         </div>
         <div class="stat-tile stat-tile--sky">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span><span class="st-trend st-trend--flat"><span class="live-dot"></span>Live</span></div>
           <div class="bento-overline">Project Aktif</div>
           <div class="bento-big" id="biz-stat-active">—</div>
           <div class="bento-cap">Sedang berjalan</div>
-          <span class="ink-dot"></span>
         </div>
         <div class="stat-tile stat-tile--gold">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span></div>
           <div class="bento-overline">Total Pengeluaran</div>
           <div class="bento-big" id="biz-stat-spent" style="font-size:24px">—</div>
           <div class="bento-cap">Lewat Escrow</div>
@@ -973,7 +984,6 @@
       <div class="settings-list">
         <div class="settings-item" onclick="goTo('screen-edit-profile')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span>Edit Profil Bisnis</span><svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         <div class="settings-item" onclick="goTo('screen-bank-account')"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>Rekening Bank</span><svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
-        <div class="settings-item" onclick="toggleTheme()"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><span>Dark / Light Mode</span><svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         <div class="settings-item danger" onclick="handleLogout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Keluar</span><svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
     </div>
@@ -1095,7 +1105,7 @@
         <div style="display:grid; gap:16px">
           <div class="form-group"><label class="form-label">Judul Project <span class="req">*</span></label><input class="form-input" id="pp-title" type="text" placeholder="Contoh: Desain Logo Startup F&B"></div>
           <div class="form-group"><label class="form-label">Deskripsi Lengkap <span class="req">*</span></label><textarea class="form-textarea" id="pp-desc" rows="5" placeholder="Jelaskan kebutuhan project secara detail..."></textarea></div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+          <div class="form-row-2" style="display:grid; gap:12px">
             <div class="form-group"><label class="form-label">Budget Min (Rp) <span class="req">*</span></label><input class="form-input" id="pp-budget-min" type="text" inputmode="numeric" placeholder="150.000" oninput="slPriceInput(this)"></div>
             <div class="form-group"><label class="form-label">Budget Max (Rp) <span class="req">*</span></label><input class="form-input" id="pp-budget-max" type="text" inputmode="numeric" placeholder="300.000" oninput="slPriceInput(this)"></div>
           </div>
@@ -1385,8 +1395,6 @@
         <span class="logo-text" style="font-size:15px">stairslife</span>
         <div style="font-size:10px;font-weight:700;color:var(--rose);letter-spacing:0.5px;margin-top:2px">🛡️ ADMIN PANEL</div>
       </div>
-      <div>
-      </div>
     </div>
     <nav class="sidebar-nav">
       <div class="sidebar-item active" data-atab="0" onclick="switchAdminTab(0)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</div>
@@ -1405,6 +1413,7 @@
       <div class="sidebar-item" data-atab="7" onclick="switchAdminTab(7)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33h.09A1.65 1.65 0 0010.6 3.1V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51h.09a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v.09a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</div>
     </nav>
     <div class="sidebar-footer">
+      <div class="sidebar-item sidebar-theme" onclick="toggleTheme()" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>Tema Gelap / Terang</div>
       <div class="sidebar-logout" onclick="handleLogout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Keluar Admin</div>
     </div>
   </aside>
@@ -1417,22 +1426,25 @@
       </div>
       <div class="bento-dash">
         <div class="stat-tile stat-tile--violet">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span><span class="st-trend st-trend--flat"><span class="live-dot"></span>Live</span></div>
           <div class="bento-overline">Project Aktif</div>
           <div class="bento-big" id="admin-kpi-projects">—</div>
           <div class="bento-cap">Sedang berjalan</div>
-          <span class="ink-dot"></span>
         </div>
         <div class="stat-tile stat-tile--mint">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div>
           <div class="bento-overline">Total Pengguna</div>
           <div class="bento-big" id="admin-kpi-users">—</div>
           <div class="bento-cap">Mahasiswa + bisnis</div>
         </div>
         <div class="stat-tile stat-tile--rose">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span></div>
           <div class="bento-overline">Dispute Aktif</div>
           <div class="bento-big" id="admin-kpi-disputes">—</div>
           <div class="bento-cap">Perlu ditinjau</div>
         </div>
         <div class="stat-tile stat-tile--gold">
+          <div class="st-head"><span class="st-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></span></div>
           <div class="bento-overline">Verifikasi Pending</div>
           <div class="bento-big" id="admin-kpi-verif">—</div>
           <div class="bento-cap">Menunggu review</div>
@@ -1603,7 +1615,7 @@
     <div class="tab-panel" id="admin-tab-8">
       <h1 class="dash-greeting" style="margin-bottom:6px">Dashboard Keuangan 💰</h1>
       <p style="font-size:14px;color:var(--text-secondary);margin-bottom:20px">Pendapatan komisi platform 10%</p>
-      <div class="bento-dash" style="grid-template-columns:repeat(3,1fr)">
+      <div class="bento-dash bento-3">
         <div class="stat-tile stat-tile--mint">
           <div class="bento-overline">Total Komisi</div>
           <div class="bento-big" id="fin-total-komisi" style="font-size:24px">—</div>
@@ -1620,7 +1632,7 @@
           <div class="bento-cap">Pembayaran tercatat</div>
         </div>
       </div>
-      <div class="bento-dash" style="grid-template-columns:repeat(2,1fr)">
+      <div class="bento-dash bento-2">
         <div class="stat-tile stat-tile--rose">
           <div class="bento-overline">Komisi Hari Ini</div>
           <div class="bento-big" id="fin-hari-ini" style="font-size:24px">—</div>
@@ -1843,15 +1855,6 @@
           <div class="settings-item" style="justify-content:space-between">
             <div style="display:flex;align-items:center;gap:12px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><span>Notifikasi Pembayaran</span></div>
             <label class="toggle-sw"><input type="checkbox" id="notif-pay" checked onchange="showToast('Pengaturan disimpan ✅','success')"><span class="toggle-track"></span></label>
-          </div>
-        </div>
-        <!-- Appearance -->
-        <div style="font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;margin-left:4px">TAMPILAN</div>
-        <div class="settings-list" style="margin-bottom:16px">
-          <div class="settings-item" onclick="toggleTheme()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
-            <span style="flex:1">Dark / Light Mode</span>
-            <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
         </div>
         <!-- Account -->

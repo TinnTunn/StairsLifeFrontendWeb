@@ -26,17 +26,21 @@
     var target = parseFloat(numStr);
     if (isNaN(target)) return;
     var decimals = (numStr.split('.')[1] || '').length;
-    if (reduce || dur === 0) { el.textContent = prefix + target.toFixed(decimals) + suffix; return; }
+    // Bintang (★) selalu emas, walau angka di-count-up. prefix/number aman
+    // (numerik) untuk innerHTML; suffix hanya membungkus ★.
+    var suffixHtml = suffix.replace(/★/g, '<span class="cu-star">★</span>');
+    function paint(s) { el.innerHTML = prefix + s + suffixHtml; }
+    if (reduce || dur === 0) { paint(target.toFixed(decimals)); return; }
     var start = null;
     function tick(now) {
       if (start === null) start = now;
       var p = Math.min((now - start) / (dur || 1200), 1);
       var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
-      el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
+      paint((target * eased).toFixed(decimals));
       if (p < 1) requestAnimationFrame(tick);
-      else el.textContent = prefix + target.toFixed(decimals) + suffix;
+      else paint(target.toFixed(decimals));
     }
-    el.textContent = prefix + (0).toFixed(decimals) + suffix;
+    paint((0).toFixed(decimals));
     requestAnimationFrame(tick);
   }
 

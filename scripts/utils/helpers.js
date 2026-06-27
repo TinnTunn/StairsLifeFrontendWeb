@@ -336,6 +336,14 @@ window.fmtRange      = fmtRange;
 window.slParsePrice  = slParsePrice;
 window.slFormatPrice = slFormatPrice;
 window.slPriceInput  = slPriceInput;
+
+/* Chart.js renders to <canvas> and CANNOT read CSS variables — passing
+   'var(--text-muted)' makes it fall back to a dark default (invisible in dark
+   mode). Return a resolved color matching the current theme for chart ticks. */
+function slChartInk() {
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? '#C3BFDD' : '#565C73';
+}
+window.slChartInk = slChartInk;
 window.tierBadge     = tierBadge;
 window.statusBadge   = statusBadge;
 window.initials      = initials;

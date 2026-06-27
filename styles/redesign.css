@@ -113,33 +113,72 @@ h1, h2, h3, h4, h5, h6,
 
 .bento-dash .stat-tile {
   position: relative; overflow: hidden;
-  display: flex; flex-direction: column; gap: 6px;
-  min-height: 124px; padding: 20px 18px 18px;
+  display: flex; flex-direction: column; gap: 5px;
+  min-height: 146px; padding: 18px;
   background: var(--bg-raised);
   border: 1px solid var(--line-1);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(16,18,40,0.04), 0 12px 28px -20px rgba(16,18,40,0.22);
+  transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out), border-color var(--dur-fast,140ms);
 }
-.bento-dash .stat-tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-[data-theme="dark"] .bento-dash .stat-tile { border-color: var(--line-2); }
+.bento-dash .stat-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(16,18,40,0.05), 0 22px 44px -26px rgba(16,18,40,0.34);
+  border-color: color-mix(in srgb, var(--tile-solid, var(--brand)) 38%, var(--line-1));
+}
+[data-theme="dark"] .bento-dash .stat-tile { border-color: var(--line-2); box-shadow: none; }
 [data-theme="dark"] .bento-dash .stat-tile:hover { background: var(--bg-raised-2); }
-.bento-dash .stat-tile::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: var(--tile-accent, var(--brand));
+/* solid-color accent texture (no gradient) — large faint disc, bottom-right */
+.bento-dash .stat-tile::after {
+  content: ""; position: absolute; right: -30px; bottom: -30px;
+  width: 96px; height: 96px; border-radius: 50%;
+  background: var(--tile-solid, var(--brand)); opacity: 0.06; pointer-events: none;
+  transition: transform var(--dur-base,220ms) var(--ease-out);
+}
+[data-theme="dark"] .bento-dash .stat-tile::after { opacity: 0.16; }
+.bento-dash .stat-tile:hover::after { transform: scale(1.18); }
+
+/* head row: solid-color icon chip + trend pill */
+.bento-dash .st-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.st-ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+  background: color-mix(in srgb, var(--tile-solid, var(--brand)) 14%, var(--bg-raised));
+  color: var(--tile-solid, var(--brand));
+  transition: transform var(--dur-base,220ms) var(--ease-spring, var(--ease-out));
+}
+[data-theme="dark"] .st-ico { background: color-mix(in srgb, var(--tile-solid, var(--brand)) 26%, transparent); }
+.st-ico svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.bento-dash .stat-tile:hover .st-ico { transform: translateY(-2px) rotate(-5deg); }
+.st-trend {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 4px 9px; border-radius: var(--radius-full);
+  font-size: 11.5px; font-weight: 700; line-height: 1; white-space: nowrap;
+}
+.st-trend svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+.st-trend--up   { background: color-mix(in srgb, var(--mint-500) 14%, var(--bg-raised)); color: var(--ok-fg, #0F6E56); }
+.st-trend--down { background: var(--err-soft); color: var(--err-fg); }
+.st-trend--flat { background: var(--bg-sunken); color: var(--fg-2); }
+[data-theme="dark"] .st-trend--up { background: rgba(31,185,125,0.18); color: var(--mint-300, #6FE3B8); }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint-500); flex-shrink: 0; animation: livePulse 1.7s ease-out infinite; }
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--mint-500) 55%, transparent); }
+  70%  { box-shadow: 0 0 0 6px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
 }
 
-.bento-overline { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); }
-.bento-big { font-family: var(--font-heading); font-weight: 800; font-size: 34px; line-height: 1; letter-spacing: -0.04em; margin-top: auto; color: var(--fg-1); display: inline-flex; align-items: center; gap: 4px; }
+.bento-overline { font-size: 10.5px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fg-3); }
+.bento-big { font-family: var(--font-heading); font-weight: 800; font-size: 33px; line-height: 1.02; letter-spacing: -0.04em; margin-top: auto; color: var(--fg-1); display: inline-flex; align-items: center; gap: 4px; }
 .bento-big span { font-size: 18px; font-weight: 700; margin-left: 3px; color: inherit; }
 .bento-cap { font-size: 12.5px; font-weight: 600; color: var(--fg-2); }
 .bento-cap--up { color: var(--ok-fg); }
 
-.stat-tile--violet { --tile-accent: linear-gradient(90deg, var(--brand), #8B5BFF); }
-.stat-tile--mint   { --tile-accent: linear-gradient(90deg, var(--mint-500), var(--mint-300)); }
-.stat-tile--gold   { --tile-accent: linear-gradient(90deg, var(--gold-500), var(--gold-300)); }
-.stat-tile--rose   { --tile-accent: linear-gradient(90deg, var(--err), var(--rose-300)); }
-.stat-tile--sky    { --tile-accent: linear-gradient(90deg, var(--info), var(--sky-300)); }
+/* solid accent color per tile (no gradients — honours "warna solid") */
+.stat-tile--violet { --tile-solid: var(--brand); }
+.stat-tile--mint   { --tile-solid: var(--mint-500); }
+.stat-tile--gold   { --tile-solid: var(--gold-500); }
+.stat-tile--rose   { --tile-solid: var(--err); }
+.stat-tile--sky    { --tile-solid: var(--info); }
 .stat-tile--violet .bento-big { color: var(--brand); }
 [data-theme="dark"] .stat-tile--violet .bento-big { color: var(--violet-300); }
 .stat-tile--gold .bento-big { color: var(--fg-1); }
@@ -148,9 +187,6 @@ h1, h2, h3, h4, h5, h6,
 .bento-dash .b-bar { height: 6px; background: var(--bg-sunken); border-radius: 99px; overflow: hidden; margin-top: 8px; }
 [data-theme="dark"] .bento-dash .b-bar { background: rgba(255,255,255,0.12); }
 .bento-dash .b-fill { height: 100%; background: linear-gradient(90deg, var(--brand), #8B5BFF); border-radius: 99px; transition: width 600ms var(--ease-out); }
-/* live pulse dot (Project Aktif) */
-.bento-dash .ink-dot { position: absolute; bottom: 14px; right: 14px; width: 10px; height: 10px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 12px var(--brand); }
-[data-theme="dark"] .bento-dash .ink-dot { background: var(--violet-300); box-shadow: 0 0 12px var(--violet-300); }
 
 /* ---------------------------------------------------------------
    2c-ter. VERIFY BANNER — design "verify-banner" (warm-wash alert
@@ -269,7 +305,8 @@ h1, h2, h3, h4, h5, h6,
 .hero-inner, .hero-layout { position: relative; z-index: 1; }
 /* Hero title accent — kata kunci spark + highlight bar (design) */
 .hero-title .hero-accent { display: inline-block; position: relative; color: var(--spark); }
-.hero-title .hero-accent::after { content: ""; position: absolute; left: 0; right: 0; bottom: .02em; height: 6px; background: rgba(165,164,255,.45); border-radius: 3px; z-index: -1; }
+.hero-title .hero-accent::after { content: ""; position: absolute; left: 0; right: 0; bottom: .02em; height: 6px; background: rgba(165,164,255,.45); border-radius: 3px; z-index: -1; transform-origin: left center; animation: slUnderline 0.9s var(--ease-out) 0.55s backwards; }
+@keyframes slUnderline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .hero-card { background: var(--glass-bg-dark, rgba(20,18,40,0.55)); border: 1px solid var(--glass-border, rgba(255,255,255,0.16)); backdrop-filter: saturate(160%) blur(18px); -webkit-backdrop-filter: saturate(160%) blur(18px); }
 
 /* ---------------------------------------------------------------
@@ -988,3 +1025,435 @@ input[type="checkbox"]:checked + .toggle-track { background: var(--brand); }
   .portfolio-hero-banner::after, .pub-profile-header::after,
   #wallet-hero > div::before, #notif-list .card, #faq-list .faq-item { animation: none !important; }
 }
+
+/* ================================================================
+   20. DASHBOARD MODERNIZATION — cross-cutting polish so inner
+   content stops feeling flat: section-header accent, intentional
+   empty states, activity rows. Solid colors, micro-detail.
+   (Appended after §19 — no selector duplicates within this file.)
+   ================================================================ */
+
+/* 20a. Section header — solid accent bar + pill "see all" action */
+.section-hdr { margin-top: 2px; }
+.section-hdr-title { position: relative; display: inline-flex; align-items: center; gap: 10px; }
+.section-hdr-title::before {
+  content: ""; width: 4px; height: 18px; border-radius: 2px;
+  background: var(--sec-accent, var(--brand)); flex-shrink: 0;
+}
+.section-hdr-action {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 12px; border-radius: var(--radius-full);
+  background: var(--brand-soft); color: var(--brand);
+  font-weight: 700; font-size: 12.5px; text-decoration: none;
+  transition: background var(--dur-fast,140ms) var(--ease-out), transform var(--dur-fast,140ms) var(--ease-out);
+}
+.section-hdr-action:hover {
+  background: color-mix(in srgb, var(--brand-soft) 72%, var(--brand) 28%);
+  text-decoration: none; transform: translateX(2px);
+}
+
+/* 20b. Empty state — intentional: soft disc behind icon, no naked emoji */
+.empty-state { padding: 28px 18px; }
+.empty-state-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 70px; height: 70px; margin: 0 auto 14px; border-radius: 50%;
+  background: var(--brand-soft); font-size: 32px; line-height: 1;
+}
+[data-theme="dark"] .empty-state-icon { background: rgba(91,91,245,0.18); }
+.empty-state-title { color: var(--fg-1); font-weight: 700; }
+.empty-state-desc { color: var(--fg-2); }
+
+/* 20c. Activity list — card surface + row hover (was borderless/flat) */
+.activity-list { background: var(--bg-raised); border: 1px solid var(--line-1); box-shadow: 0 8px 24px -20px rgba(16,18,40,0.2); }
+[data-theme="dark"] .activity-list { border-color: var(--line-2); box-shadow: none; }
+.activity-list > *:not(:last-child) { border-bottom: 1px solid var(--line-1); }
+[data-theme="dark"] .activity-list > *:not(:last-child) { border-bottom-color: var(--line-2); }
+
+/* 20d. Dashboard greeting — slightly tighter, accent wave already inline */
+.dash-header { position: relative; }
+.dash-subtitle { color: var(--fg-2); }
+
+/* ================================================================
+   21. MOTION & INTERACTIVITY v2 — landing + login come alive, plus
+   component upgrades reused across every page. Subtle/slow/eased.
+   Gold ★ everywhere. All gated by prefers-reduced-motion (bottom).
+   ================================================================ */
+
+/* gold star — count-up suffix ★ + any inline .gold-star */
+.cu-star, .gold-star { color: var(--rating); font-style: normal; }
+
+/* ---- 21a. Buttons: light-sheen sweep on hover (global, all pages) ---- */
+.btn-primary, .btn-spark { position: relative; overflow: hidden; }
+.btn-primary::after, .btn-spark::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -130%; width: 55%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.40), transparent);
+  transform: skewX(-18deg); pointer-events: none;
+}
+.btn-primary:hover::after, .btn-spark:hover::after { animation: slSheen 0.85s var(--ease-out); }
+@keyframes slSheen { from { left: -130%; } to { left: 130%; } }
+
+/* ---- 21b. Hero: live status dot, uni-chip hover, headline reveal ---- */
+.hero-badge::before {
+  content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px;
+  border-radius: 50%; background: var(--ok, #1FB97D); vertical-align: 1px;
+  box-shadow: 0 0 0 0 rgba(31,185,125,0.55); animation: slBeacon 2.1s ease-out infinite;
+}
+@keyframes slBeacon {
+  0%   { box-shadow: 0 0 0 0 rgba(31,185,125,0.55); }
+  70%  { box-shadow: 0 0 0 9px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.hero-uni { transition: transform var(--dur-fast,140ms) var(--ease-out), color var(--dur-fast,140ms); cursor: default; }
+.hero-uni:hover { transform: translateY(-3px); color: #fff; }
+
+/* ---- 21c. Login art column: floating orbs (violet + gold) + shimmer ---- */
+.auth-art::before, .auth-art::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; }
+.auth-art::before {
+  width: 230px; height: 230px; top: -54px; right: -44px;
+  background: radial-gradient(circle, rgba(165,164,255,0.36), transparent 70%);
+  animation: slOrbA 15s ease-in-out infinite;
+}
+.auth-art::after {
+  width: 180px; height: 180px; bottom: 56px; left: -34px;
+  background: radial-gradient(circle, rgba(245,168,0,0.22), transparent 70%);
+  animation: slOrbB 19s ease-in-out infinite;
+}
+.auth-art > * { position: relative; z-index: 1; }
+@keyframes slOrbA { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-26px,30px); } }
+@keyframes slOrbB { 0%,100% { transform: translate(0,0); } 50% { transform: translate(24px,-22px); } }
+.auth-art h1 .accent {
+  background: linear-gradient(100deg, var(--spark) 0%, #ffffff 50%, var(--spark) 100%);
+  background-size: 220% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: slTextShimmer 5.5s linear infinite;
+}
+@keyframes slTextShimmer { to { background-position: -220% 0; } }
+
+/* ---- 21d. Login role tabs: spring pop on activate + hover lift ---- */
+.login-role-tab { transition: color var(--dur-fast,140ms), background var(--dur-fast,140ms), transform var(--dur-base,220ms) var(--ease-spring, var(--ease-out)), box-shadow var(--dur-base,220ms); }
+.login-role-tab:hover:not(.active) { color: var(--fg-1); transform: translateY(-1px); }
+.login-role-tab.active { animation: slTabPop 0.34s var(--ease-spring, ease); }
+@keyframes slTabPop { 0% { transform: scale(0.94); } 60% { transform: scale(1.04); } 100% { transform: scale(1); } }
+
+/* ---- 21e. Hero showcase card: pointer-tilt handled in landing.js
+   (sets inline transform on .hero-card-stage; float stays on child) ---- */
+.hero-card-stage { will-change: transform; transition: transform 200ms var(--ease-out); }
+
+/* ---- 21f. Reused component: project/standard cards get a brand edge on hover ---- */
+.card.lift-card, .project-card { transition: transform var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out), border-color var(--dur-fast,140ms); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::after, .btn-spark::after,
+  .hero-badge::before, .auth-art::before, .auth-art::after,
+  .auth-art h1 .accent, .login-role-tab.active { animation: none !important; }
+  .auth-art h1 .accent { -webkit-text-fill-color: var(--spark); color: var(--spark); }
+  .hero-card-stage.tilt { transform: none !important; }
+}
+
+/* ================================================================
+   22. LOGO — interactive "climbing stairs" (landing nav). The three
+   steps hop in sequence on hover, the mark lifts, a gold spark pops,
+   and the wordmark warms to brand. Scoped to the logo link only
+   (the only <a> in the navbar that wraps a .logo-mark).
+   ================================================================ */
+.l-navbar .logo-mark { position: relative; transition: transform var(--dur-base,220ms) var(--ease-spring, var(--ease-out)); }
+.l-navbar a:hover .logo-mark,
+.l-navbar a:focus-visible .logo-mark { transform: translateY(-2px) scale(1.05); }
+
+.l-navbar .logo-mark svg rect { transform-box: fill-box; transform-origin: center; }
+.l-navbar a:hover .logo-mark svg rect,
+.l-navbar a:focus-visible .logo-mark svg rect { animation: stepHop 0.55s var(--ease-spring, ease); }
+.l-navbar a:hover .logo-mark svg rect:nth-child(1) { animation-delay: 0s; }
+.l-navbar a:hover .logo-mark svg rect:nth-child(2) { animation-delay: 0.08s; }
+.l-navbar a:hover .logo-mark svg rect:nth-child(3) { animation-delay: 0.16s; }
+@keyframes stepHop { 0% { transform: translateY(0); } 35% { transform: translateY(-6px); } 70%,100% { transform: translateY(0); } }
+
+/* gold spark that pops at the top of the stairs on hover */
+.l-navbar .logo-mark::after {
+  content: ""; position: absolute; top: -3px; right: -4px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--rating);
+  box-shadow: 0 0 8px var(--rating);
+  opacity: 0; transform: scale(0); transition: opacity .22s var(--ease-out), transform .4s var(--ease-spring, ease);
+}
+.l-navbar a:hover .logo-mark::after,
+.l-navbar a:focus-visible .logo-mark::after { opacity: 1; transform: scale(1); }
+
+.l-navbar .logo-text { transition: color var(--dur-base,220ms) var(--ease-out); }
+.l-navbar a:hover .logo-text,
+.l-navbar a:focus-visible .logo-text { color: var(--brand); }
+
+@media (prefers-reduced-motion: reduce) {
+  .l-navbar a:hover .logo-mark svg rect { animation: none !important; }
+}
+
+/* ================================================================
+   23. SCROLL MOTION — parallax orbs (hero) + directional scroll-reveal
+   variants. Orb transforms are set per-scroll by landing.js; reveal
+   variants compose with the existing .sl-reveal/.sl-in system.
+   ================================================================ */
+.sl-orb { position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(6px); will-change: transform; }
+.sl-orb--spark { width: 290px; height: 290px; top: 6%; left: -58px; background: radial-gradient(circle, rgba(165,164,255,0.30), transparent 70%); }
+.sl-orb--gold  { width: 210px; height: 210px; bottom: 8%; right: 3%; background: radial-gradient(circle, rgba(245,168,0,0.20), transparent 70%); }
+.hero-inner { position: relative; z-index: 1; }
+
+/* directional reveal variants — set the hidden-state transform; the
+   existing .sl-in (re-asserted last below) returns them to rest. */
+html.sl-js .sl-reveal.sl-left  { transform: translateX(-30px); }
+html.sl-js .sl-reveal.sl-right { transform: translateX(30px); }
+html.sl-js .sl-reveal.sl-zoom  { transform: scale(0.9); }
+html.sl-js .sl-reveal.sl-in    { transform: none; }
+/* clip the horizontal slide so it never spawns a scrollbar */
+#about-us { overflow-x: clip; }
+
+@media (prefers-reduced-motion: reduce) { .sl-orb { display: none; } }
+
+/* ================================================================
+   24. AUTH SCREENS — fix the double-logo, add entrance + focus motion.
+   Applies to EVERY auth screen that uses the split aurora layout
+   (login, register, forgot, reset, etc.) via :has — no markup change.
+   ================================================================ */
+/* Brand logo lives once, in the top row next to the back button (the
+   aurora's own logo was removed). See §28 for the full-bleed aurora. */
+
+@keyframes slFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+/* Art-column content rises in sequence each time the screen opens */
+.screen.active .auth-art > * { animation: slFadeUp 0.6s var(--ease-out) backwards; }
+.screen.active .auth-art > *:nth-child(2) { animation-delay: 0.09s; }
+.screen.active .auth-art > *:nth-child(3) { animation-delay: 0.18s; }
+.screen.active .auth-art > *:nth-child(4) { animation-delay: 0.27s; }
+
+/* Input icon springs to brand colour when its field is focused */
+.input-wrap .input-icon { transition: color var(--dur-base,220ms) var(--ease-out), transform var(--dur-base,220ms) var(--ease-out); }
+.input-wrap:focus-within .input-icon { color: var(--brand); transform: scale(1.08); }
+
+@media (prefers-reduced-motion: reduce) {
+  .screen.active .auth-art > * { animation: none !important; }
+  .input-wrap:focus-within .input-icon { transform: none; }
+}
+
+/* ================================================================
+   25. MOTION ROLLOUT (onboarding / register / detail / badges) +
+   animated landing navbar + dark-readability accent flip.
+   ================================================================ */
+
+/* 25a. "02" step number — warm indigo in light, periwinkle in dark (readable) */
+.num--warm { color: var(--warm); }
+[data-theme="dark"] .num--warm { color: var(--spark); }
+
+/* 25a-bis. --accent-dark (=violet-700) text consumers are too dark on the dark
+   canvas; flip them to spark. (Only text/icon — NOT the accent gradient bg.) */
+[data-theme="dark"] .info-box--accent p { color: var(--spark); }
+[data-theme="dark"] .info-box--accent svg { stroke: var(--spark); }
+[data-theme="dark"] .fg-warm { color: var(--spark); }
+
+/* 25b. Landing navbar — sliding active-link underline + scroll elevation */
+.l-navbar { transition: background var(--dur-base,220ms) var(--ease-out), box-shadow var(--dur-base,220ms) var(--ease-out), backdrop-filter var(--dur-base,220ms) var(--ease-out); }
+.l-navbar.is-scrolled { box-shadow: 0 6px 26px -14px rgba(16,18,40,0.30); backdrop-filter: saturate(170%) blur(12px); }
+[data-theme="dark"] .l-navbar.is-scrolled { box-shadow: 0 8px 26px -12px rgba(0,0,0,0.55); }
+.l-navbar .l-nav-link { position: relative; transition: color var(--dur-base,220ms) var(--ease-out); }
+.l-navbar .l-nav-link::after {
+  content: ""; position: absolute; left: 2px; right: 2px; bottom: -5px; height: 2px;
+  background: var(--brand); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--dur-base,260ms) var(--ease-spring, var(--ease-out));
+}
+.l-navbar .l-nav-link:hover::after,
+.l-navbar .l-nav-link.is-active::after { transform: scaleX(1); }
+.l-navbar .l-nav-link.is-active { color: var(--brand); }
+
+/* 25c. Shared entrance keyframes */
+@keyframes slRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes slPopIn { from { opacity: 0; transform: scale(0.86); } to { opacity: 1; transform: scale(1); } }
+
+/* 25d. Onboarding — active slide rises in, icon pops */
+.onboarding-slide.active { animation: slRise 0.55s var(--ease-out) backwards; }
+.onboarding-slide.active .onboarding-icon-wrap { animation: slPopIn 0.5s var(--ease-spring, ease) 0.1s backwards; }
+.onboarding-slide.active .onboarding-title { animation: slRise 0.5s var(--ease-out) 0.16s backwards; }
+.onboarding-slide.active .onboarding-desc { animation: slRise 0.5s var(--ease-out) 0.24s backwards; }
+
+/* 25e. Register — form fields rise in sequence when the screen opens */
+#screen-register.active .form-group { animation: slRise 0.45s var(--ease-out) backwards; }
+#screen-register.active .form-group:nth-of-type(2) { animation-delay: 0.05s; }
+#screen-register.active .form-group:nth-of-type(3) { animation-delay: 0.10s; }
+#screen-register.active .form-group:nth-of-type(4) { animation-delay: 0.15s; }
+#screen-register.active .form-group:nth-of-type(5) { animation-delay: 0.20s; }
+#screen-register.active .form-group:nth-of-type(6) { animation-delay: 0.25s; }
+
+/* 25f. Detail pages — content cards rise + stagger */
+.screen.active .pd-shell .card,
+#screen-contract-detail.active .card { animation: slRise 0.5s var(--ease-out) backwards; }
+.screen.active .pd-shell .card:nth-child(2),
+#screen-contract-detail.active .card:nth-child(2) { animation-delay: 0.07s; }
+.screen.active .pd-shell .card:nth-child(3),
+#screen-contract-detail.active .card:nth-child(3) { animation-delay: 0.14s; }
+
+/* 25g. Status badges — gentle pop + hover scale (reused across pages) */
+.badge { transition: transform var(--dur-fast,140ms) var(--ease-out); }
+.badge:hover { transform: translateY(-1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .l-navbar .l-nav-link::after { transition: none; }
+  .onboarding-slide.active, .onboarding-slide.active *,
+  #screen-register.active .form-group,
+  .screen.active .pd-shell .card, #screen-contract-detail.active .card { animation: none !important; }
+}
+
+/* ================================================================
+   26. AUTH SPLIT — merge the top bar into the layout (no seam).
+   On desktop the bar becomes a transparent overlay so the aurora art
+   reaches the very top; the back arrow goes light since it now sits
+   over the dark art. Only screens with an .auth-art column (login).
+   Mobile keeps the normal solid app-bar (no art to merge with).
+   ================================================================ */
+@media (min-width: 960px) {
+  .auth-screen:has(.auth-art) { position: relative; }
+  .auth-screen:has(.auth-art) .auth-topbar {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+    background: transparent; border-bottom: 0;
+  }
+  .auth-screen:has(.auth-art) .auth-split { min-height: 100dvh; }
+  /* back arrow now overlays the always-dark aurora → light, glassy hover */
+  .auth-screen:has(.auth-art) .auth-back-btn { color: rgba(255,255,255,0.82); }
+  .auth-screen:has(.auth-art) .auth-back-btn:hover { background: rgba(255,255,255,0.14); color: #fff; }
+}
+
+/* ================================================================
+   27. AUTH ART — glassy back button + floating value-prop cards that
+   drift in the (previously empty) middle of the aurora panel.
+   ================================================================ */
+/* Glassy circular back button (over the aurora) instead of a bare arrow */
+@media (min-width: 960px) {
+  .auth-screen:has(.auth-art) .auth-back-btn {
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.20);
+    color: #fff; border-radius: 50%;
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    transition: background var(--dur-base,220ms) var(--ease-out), transform var(--dur-base,220ms) var(--ease-spring, var(--ease-out)), border-color var(--dur-base,220ms);
+  }
+  .auth-screen:has(.auth-art) .auth-back-btn:hover {
+    background: rgba(255,255,255,0.20); border-color: rgba(255,255,255,0.4);
+    transform: translateX(-3px);
+  }
+  .auth-screen:has(.auth-art) .auth-back-btn svg { transition: transform var(--dur-base,220ms) var(--ease-out); }
+  .auth-screen:has(.auth-art) .auth-back-btn:hover svg { transform: translateX(-1px); }
+}
+
+/* Floating glassy value-prop cards */
+.aart-floats { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; max-width: 420px; width: 100%; }
+.aart-float {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 16px; color: #fff;
+  -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%);
+  animation: aartFade 0.6s var(--ease-out) backwards, aartDrift 6.5s ease-in-out infinite;
+  transition: background var(--dur-base,220ms) var(--ease-out), border-color var(--dur-base,220ms), transform var(--dur-base,220ms) var(--ease-out);
+}
+.aart-float:nth-child(1) { animation-delay: 0.20s, 0s; }
+.aart-float:nth-child(2) { animation-delay: 0.34s, 0.9s; }
+.aart-float:nth-child(3) { animation-delay: 0.48s, 1.8s; }
+.aart-float:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.30); }
+.aart-float__ic { width: 46px; height: 46px; flex-shrink: 0; border-radius: 13px; display: grid; place-items: center; background: rgba(165,164,255,0.22); border: 1px solid rgba(255,255,255,0.14); }
+.aart-float__ic svg { width: 23px; height: 23px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.aart-float__tx { display: flex; flex-direction: column; line-height: 1.3; }
+.aart-float__tx b { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; }
+.aart-float__tx span { font-size: 12.5px; color: rgba(255,255,255,0.72); }
+@keyframes aartFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes aartDrift { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .aart-float { animation: none !important; }
+}
+
+/* ================================================================
+   28. AUTH — FULL-BLEED aurora background (whole screen, theme-aware),
+   readable content on either aurora, glassy form retained, living drift.
+   Light = white-with-violet, dark = ink-violet. Form card keeps its own
+   colours (--bg-card). All consumers use --auth-* tokens so they flip.
+   ================================================================ */
+.auth-screen:has(.auth-art) { background: var(--grad-auth); position: relative; overflow: hidden; }
+.auth-art { background: transparent; }
+
+/* living aurora — a soft violet blob drifts slowly behind everything */
+.auth-screen:has(.auth-art)::before {
+  content: ""; position: absolute; z-index: 0; pointer-events: none;
+  width: 60vw; height: 60vw; max-width: 760px; max-height: 760px;
+  top: -14%; left: 26%; border-radius: 50%; filter: blur(22px);
+  background: radial-gradient(circle, rgba(139,91,255,0.18), transparent 68%);
+  animation: authDrift 22s ease-in-out infinite;
+}
+.auth-screen:has(.auth-art) > * { position: relative; z-index: 1; }
+@keyframes authDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(-8%, 6%) scale(1.08); }
+  66%     { transform: translate(6%, -4%) scale(0.96); }
+}
+
+/* content text flips with the aurora */
+.auth-art h1 { color: var(--auth-fg); }
+.auth-art p, #auth-art-desc { color: var(--auth-fg-dim); }
+
+/* accent: clean solid brand in light; keep the shimmer only in dark */
+.auth-art h1 .accent { background: none; color: var(--auth-accent); -webkit-text-fill-color: var(--auth-accent); animation: none; }
+[data-theme="dark"] .auth-art h1 .accent {
+  background: linear-gradient(100deg, var(--spark) 0%, #ffffff 50%, var(--spark) 100%);
+  background-size: 220% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: slTextShimmer 5.5s linear infinite;
+}
+
+/* floating cards + quote use the theme glass + text */
+.aart-float { background: var(--auth-glass); border-color: var(--auth-glass-bd); color: var(--auth-fg); }
+.aart-float__tx b { color: var(--auth-fg); }
+.aart-float__tx span { color: var(--auth-fg-dim); }
+.aart-float__ic { background: color-mix(in srgb, var(--brand) 16%, transparent); border-color: var(--auth-glass-bd); }
+.aart-float__ic svg { stroke: var(--auth-accent); }
+.auth-quote { background: var(--auth-glass); border-color: var(--auth-glass-bd); }
+.auth-quote .q { color: var(--auth-fg); }
+.auth-quote .who #auth-art-who { color: var(--auth-fg); }
+.auth-quote .who #auth-art-whosub { color: var(--auth-fg-dim); }
+
+/* top row (back button + brand logo) themed for the aurora underneath */
+@media (min-width: 960px) {
+  /* Cap + center the split on wide screens so the left content and the form
+     card stay close (full-width let them drift far apart). Topbar matches the
+     same cap so the back button/logo align over the content. Aurora bg + drift
+     orbs remain full-bleed on .auth-screen behind this. */
+  .auth-screen:has(.auth-art) .auth-split { max-width: 1280px; margin-inline: auto; width: 100%; }
+  .auth-screen:has(.auth-art) .auth-topbar { padding: 0 26px; max-width: 1280px; margin-inline: auto; }
+  .auth-screen:has(.auth-art) .auth-back-btn { color: var(--auth-fg); background: var(--auth-glass); border-color: var(--auth-glass-bd); }
+  .auth-screen:has(.auth-art) .auth-back-btn:hover { background: color-mix(in srgb, var(--auth-glass) 70%, var(--auth-fg) 14%); }
+  .auth-screen:has(.auth-art) .auth-topbar .logo-text { color: var(--auth-fg); }
+  .auth-screen:has(.auth-art) .theme-btn { color: var(--auth-fg); }
+}
+
+@media (prefers-reduced-motion: reduce) { .auth-screen:has(.auth-art)::before { animation: none; } }
+
+/* ================================================================
+   29. RESPONSIVE FIXES — inline grids that previously couldn't reflow
+   on small screens (hard-coded column counts beat the media queries).
+   Now class-based + mobile-first so they collapse on phones/tablets.
+   ================================================================ */
+/* About-us: 2-col editorial on desktop, single column on small screens */
+#about-us .grid-2 { grid-template-columns: 1fr; }
+@media (min-width: 760px) { #about-us .grid-2 { grid-template-columns: 1.2fr 0.8fr; } }
+
+/* Finance KPI bentos — collapse like the standard bento-dash */
+.bento-dash.bento-3 { grid-template-columns: repeat(3, 1fr); }
+.bento-dash.bento-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 860px) { .bento-dash.bento-3, .bento-dash.bento-2 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .bento-dash.bento-3, .bento-dash.bento-2 { grid-template-columns: 1fr; } }
+
+/* Two-up form rows (budget min/max) stack on narrow phones */
+.form-row-2 { grid-template-columns: 1fr 1fr; }
+@media (max-width: 460px) { .form-row-2 { grid-template-columns: 1fr; } }
+
+/* ================================================================
+   30. SIDEBAR — centered brand logo (all 3 actors) + visible theme
+   toggle in the footer (was only buried in Settings; admin lacked it).
+   ================================================================ */
+/* Horizontal brand: logo mark + wordmark in a row, aligned left so it lines
+   up with the nav items below (cleaner than a floating center). */
+.sidebar-logo { flex-direction: row; align-items: center; justify-content: flex-start; text-align: left; gap: 10px; }
+.sidebar-theme { width: 100%; }
+.sidebar-theme svg { stroke: currentColor; fill: none; }

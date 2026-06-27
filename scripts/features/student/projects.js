@@ -40,11 +40,17 @@ async function loadProjectsFromAPI(filters = {}) {
     const seen   = new Set();
     const unique = normalized.filter(p => { if (seen.has(p.id)) return false; seen.add(p.id); return true; });
 
+    const emptyHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">🔍</div><div class="empty-state-title">Tidak ada project ditemukan</div><p class="empty-state-desc">Belum ada project tersedia saat ini. Coba ubah filter atau cek lagi nanti.</p></div>`;
+
     const homeGridEl = document.getElementById('home-project-grid');
-    if (homeGridEl) homeGridEl.innerHTML = unique.slice(0, 4).map((p, i) => buildProjectCard(p, i)).join('');
+    if (homeGridEl) homeGridEl.innerHTML = unique.length
+      ? unique.slice(0, 4).map((p, i) => buildProjectCard(p, i)).join('')
+      : emptyHTML;
 
     const browseGridEl = document.getElementById('browse-project-grid');
-    if (browseGridEl) browseGridEl.innerHTML = unique.map((p, i) => buildProjectCard(p, i)).join('');
+    if (browseGridEl) browseGridEl.innerHTML = unique.length
+      ? unique.map((p, i) => buildProjectCard(p, i)).join('')
+      : emptyHTML;
 
     const countEl = document.getElementById('browse-count-txt');
     if (countEl) countEl.textContent = `${unique.length} project tersedia untuk kamu`;

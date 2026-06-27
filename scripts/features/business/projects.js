@@ -55,6 +55,10 @@ async function handlePostProject(btnEl) {
       await ProjectsAPI.create({ title, description: desc, budget_min: bMin, budget_max: bMax, deadline, category: cat, tier, skills, deliverables });
       showToast('Project berhasil dipasang! 🚀', 'success');
       if (typeof invalidateMyProjectsCache === 'function') invalidateMyProjectsCache();
+      // Reset form HANYA setelah sukses — supaya buka "Pasang Project" lagi
+      // tidak terisi data project sebelumnya. (Kalau gagal, input dipertahankan.)
+      ['pp-title','pp-desc','pp-budget-min','pp-budget-max','pp-deadline','pp-category','pp-tier','pp-skills','pp-deliverables']
+        .forEach(id => { const el = document.getElementById(id); if (el) { el.value = ''; if (el.dataset) delete el.dataset.raw; } });
       // Langsung ke tab "Project Saya" + render ulang (force) supaya project
       // baru langsung tampil tanpa perlu refresh manual.
       setTimeout(() => {

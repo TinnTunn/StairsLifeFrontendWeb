@@ -65,12 +65,12 @@ async function renderAdminFinances() {
                 callback: v => v >= 1000000
                   ? `${(v / 1000000).toFixed(1)}jt`
                   : `${(v / 1000).toFixed(0)}K`,
-                color: 'var(--text-muted)',
+                color: slChartInk(),
               },
               grid: { color: 'rgba(128,128,128,0.1)' },
             },
             x: {
-              ticks: { color: 'var(--text-muted)', maxTicksLimit: 10 },
+              ticks: { color: slChartInk(), maxTicksLimit: 10 },
               grid: { display: false },
             },
           },

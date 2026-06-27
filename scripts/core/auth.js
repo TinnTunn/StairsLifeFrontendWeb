@@ -44,7 +44,7 @@ function switchLoginRole(i) {
   if (passInput)  passInput.value  = '';
 
   if (emailInput) {
-    const hints = ['nama@kampus.ac.id', 'nama@bisnis.com', 'admin@stairslife.id'];
+    const hints = ['nama@kampus.ac.id', 'nama@bisnis.com', 'email admin'];
     emailInput.placeholder = hints[i];
   }
   if (emailHint) {

@@ -78,11 +78,15 @@
    * -------------------------------------------------------- */
   function initScrollExtras() {
     if (!document.getElementById('screen-landing')) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var bar = document.getElementById('sl-progress-bar');
     var spy = Array.prototype.map.call(document.querySelectorAll('.l-nav-link[data-spy]'), function (l) {
       return { link: l, sec: document.getElementById(l.getAttribute('data-spy')) };
     }).filter(function (x) { return x.sec; });
-    if (!bar && !spy.length) return;
+    // Parallax: elemen dekoratif yang bergeser mengikuti posisi scroll —
+    // tiap gerakan scroll = gerak halus (depth). Nonaktif saat reduced-motion.
+    var px = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('#screen-landing [data-parallax]'));
+    if (!bar && !spy.length && !px.length) return;
 
     var scroller = null, ticking = false;
     function onScroll(e) {
@@ -98,6 +102,8 @@
       var landing = document.getElementById('screen-landing');
       if (!landing || !landing.classList.contains('active')) return;
       var sc = scroller || document.scrollingElement || document.documentElement;
+      var nav = document.getElementById('l-navbar');
+      if (nav && sc) nav.classList.toggle('is-scrolled', (sc.scrollTop || 0) > 24);
       if (bar && sc) {
         var max = sc.scrollHeight - sc.clientHeight;
         bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(sc.scrollTop / max, 1) : 0).toFixed(4) + ')';
@@ -109,6 +115,15 @@
           if (r.top <= line && r.bottom > line) active = x;
         });
         spy.forEach(function (x) { x.link.classList.toggle('is-active', x === active); });
+      }
+      if (px.length) {
+        var vh = window.innerHeight || document.documentElement.clientHeight || 800;
+        px.forEach(function (el) {
+          var sp = parseFloat(el.getAttribute('data-parallax')) || 0;
+          var r = el.getBoundingClientRect();
+          var offset = ((r.top + r.height / 2) - vh / 2) * sp;
+          el.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';
+        });
       }
     }
     window.addEventListener('scroll', onScroll, true);

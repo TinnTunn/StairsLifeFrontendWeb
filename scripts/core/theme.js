@@ -17,6 +17,15 @@ function applyTheme(t) {
     if (sun)  sun.style.display  = t === 'light' ? '' : 'none';
     if (moon) moon.style.display = t === 'dark'  ? '' : 'none';
   });
+  // Chart.js bakes tick colors in at creation (canvas can't read CSS vars),
+  // so re-render the admin overview charts if the theme flips while viewing
+  // them — keeps the axis numbers readable in both modes.
+  try {
+    const adm = document.getElementById('screen-admin');
+    if (adm && adm.classList.contains('active') && typeof window.renderAdminOverview === 'function') {
+      window.renderAdminOverview();
+    }
+  } catch (e) {}
 }
 
 function toggleTheme() {
